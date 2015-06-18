@@ -1,0 +1,34 @@
+title: "Tower of Hanoi's Team Blog"
+author: "T0H Team"
+description: "CTFs write-ups written by PoliMi's security team."
+#subheading: "Security and other cool stuff."
+more: "read more"
+url: ""
+baseurl: "" # comment out if in root directory
+
+#comments:
+#    disqus: "krishaths"
+#    isso: "comments.mysite.org"
+
+style:
+#    body: "whitesmoke"
+    padding: 33%
+    anchor: "#46f"
+    serif-heading: true
+    nav: "#181818"
+#    headline: "#06f"
+    description: "white"
+    article:
+        odd: "#ffffff"
+        even: "#222222"
+
+links:
+  #- github: "https://github.com/krishath/"
+  #- twitter: "https://twitter.com/me/"
+  #- google-plus: "https://plus.google.com/+me"
+  #- reddit: "https://www.reddit.com/user/me/"
+  #- youtube: "https://www.youtube.com/user/HayateSnake"
+  #- steam: "http://steamcommunity.com/id/krishath/"
+
+excerpt_separator: "\n\n\n\n\n\n"
+defaults: [{scope: {path: ""}, values: {layout: "default"}}, {scope: {path: "", type: "posts"}, values: {comments: true}}]
