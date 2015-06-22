@@ -74,7 +74,7 @@ Did we succeed?
 
 PS: I know that some of you was wondering how wonderful our script was...so... have a good headache after it ;-)
 
-{%highlight python linenos=table%}
+{%highlight python%}
 import mmap
 import struct
 from zlib import crc32
