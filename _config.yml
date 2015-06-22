@@ -1,34 +1,31 @@
-title: "Tower of Hanoi's Team Blog"
-author: "T0H Team"
-description: "CTFs write-ups written by PoliMi's security team."
-#subheading: "Security and other cool stuff."
-more: "read more"
-url: ""
-baseurl: "" # comment out if in root directory
+# Site settings
+title: "Tower of Hanoi"
+email: info@changeme.me
+description: "CTFs write-ups by the PoliMi Security Team."
+baseurl: ""
+url: "http://towerofhanoi.github.io/"
+title_description: "Badass students doing things on their PCs? Check. Soulless coding monkeys solving security challenges? Check. Handsome Italian guys better than Gordon Ramsey? Check. Perfectly and lovely written write-ups? Check. Sounds perfect."
+title_image: "http://polictf.it/images/logo.png"
+google_analytics: "UA-20365477-4"
+#disqus_account: cartenoire
+github_repository: https://github.com/towerofhanoi
+addthis_id: ra-513c6fa83da6ec67
+post_limit: 5
 
-#comments:
-#    disqus: "krishaths"
-#    isso: "comments.mysite.org"
+# Social usernames/URLs
+twitter_username: towerofhanoi
+github_username: towerofhanoi
+#linkedin_link: http://carte-noire.jacobtomlinson.co.uk/
+#google_plus_link: http://carte-noire.jacobtomlinson.co.uk/
+#stackoverflow_link: http://carte-noire.jacobtomlinson.co.uk/
 
-style:
-#    body: "whitesmoke"
-    padding: 33%
-    anchor: "#46f"
-    serif-heading: true
-    nav: "#181818"
-#    headline: "#06f"
-    description: "white"
-    article:
-        odd: "#ffffff"
-        even: "#222222"
+# Footer
+footer_left: "Theme 'Carte Noire' by Jacob Tomlinson"
+#footer_right: "&lt;/&gt; on <a href=\"https://github.com/jacobtomlinson/carte-noire\">Github</a> &nbsp;<i class=\"fa fa-github-alt\"></i>"
 
-links:
-  #- github: "https://github.com/krishath/"
-  #- twitter: "https://twitter.com/me/"
-  #- google-plus: "https://plus.google.com/+me"
-  #- reddit: "https://www.reddit.com/user/me/"
-  #- youtube: "https://www.youtube.com/user/HayateSnake"
-  #- steam: "http://steamcommunity.com/id/krishath/"
-
-excerpt_separator: "\n\n\n\n\n\n"
-defaults: [{scope: {path: ""}, values: {layout: "default"}}, {scope: {path: "", type: "posts"}, values: {comments: true}}]
+# Build settings
+markdown: redcarpet
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
+permalink: pretty
+exclude: [vendor]
