@@ -1,5 +1,6 @@
 ---
 title:      Plaid CTF 2015 - PNG Corrupt
+author: Giulio "Krishath" De Pasquale
 date:       2015-06-12 12:00:00
 summary:    This is how you (don't) recover a badly downloaded PNG image.
 categories: write-ups
