@@ -1,5 +1,11 @@
 ---
-title: Plaid CTF 2015 - PNG Corrupt
+title:      Plaid CTF 2015 - PNG Corrupt
+date:       2015-06-12 12:00:00
+summary:    This is how you (don't) recover a badly downloaded PNG image.
+categories: write-ups
+thumbnail: jekyll
+tags:
+ - PlaidCTF
 ---
 
 Me and my team, [Tower of Hanoi](https://www.polictf.it), have played the PlaidCTF 2015: while my teammates did reversing stuff, my friend john and I did this awesome forensic challenge.

@@ -49,6 +49,21 @@ body {
 	width: 100%
 }
 
+table.highlighttable {
+	border-collapse: collapse;
+	border-radius: 3px;
+	width: 100%;
+	white-space: pre;
+	th, td {
+		border: 1px solid;
+	}
+	td {
+		pre {
+			margin: 0;
+			white-space: pre;
+		}
+	}
+}
 a, a:active {
 	color: $light-blue;
 	text-decoration: none;

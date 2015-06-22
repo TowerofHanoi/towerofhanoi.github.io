@@ -22,10 +22,11 @@ github_username: towerofhanoi
 # Footer
 footer_left: "Theme 'Carte Noire' by Jacob Tomlinson"
 #footer_right: "&lt;/&gt; on <a href=\"https://github.com/jacobtomlinson/carte-noire\">Github</a> &nbsp;<i class=\"fa fa-github-alt\"></i>"
-
+highlighter: pygments
 # Build settings
-markdown: redcarpet
+markdown: redcarpet2
 redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
+  extensions: ["tables", "no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
 permalink: pretty
 exclude: [vendor]
+defaults: [{scope: {path: ""}, values: {layout: "post"}}]
