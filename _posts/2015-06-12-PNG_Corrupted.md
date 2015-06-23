@@ -12,12 +12,6 @@ tags:
 
 Me and my team, [Tower of Hanoi](https://www.polictf.it), have played the PlaidCTF 2015: while my teammates did reversing stuff, my friend john and I did this awesome forensic challenge.
 
-
-
-
-
-
-
 This was the challenge description:
 
 > We received this PNG file, but we're a bit concerned the transmission may have not quite been perfect.
