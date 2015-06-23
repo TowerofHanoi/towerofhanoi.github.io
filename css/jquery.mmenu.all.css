@@ -48,7 +48,8 @@
     left: 100%;
     z-index: 0; }
     .mm-menu > .mm-panel.mm-opened {
-      left: 0%; }
+      left: 0%;
+      }
     .mm-menu > .mm-panel.mm-subopened {
       left: -40%; }
     .mm-menu > .mm-panel.mm-highest {
@@ -303,7 +304,7 @@ html.mm-opening .mm-fixed-bottom {
   left: 80%; }
 
 .mm-menu {
-  width: 80%; }
+  width: 90%; }
 
 @media all and (max-width: 175px) {
   .mm-menu {
