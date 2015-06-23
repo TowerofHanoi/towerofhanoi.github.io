@@ -38,9 +38,9 @@ layout: default
 
                       <li>
                           <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-			  <br>
-                          <small class="hidden-xs">{{ post.date | date: "%B %-d, %Y" }} by {{ post.author }}</small>
-                      </li>
+			  <br> 
+                          <small>{{ post.date | date: "%B %-d, %Y" }} by {{ post.author }}</small>
+		      </li>
 		      {{ post.excerpt }}
 
                   {% endfor %}

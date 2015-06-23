@@ -21,7 +21,10 @@ layout: default
 
           <li>
             <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-          </li>
+          
+          <br>
+	  <small>{{ post.date | date: "%B %-d, %Y" }} by {{ post.author }}</small>
+	  </li>
       {% if forloop.last %}
         </ul>
       </div>

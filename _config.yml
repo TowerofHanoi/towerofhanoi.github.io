@@ -9,9 +9,7 @@ google_analytics: ""
 title_image: "/img/logo.png"
 #disqus_account: cartenoire
 github_repository: https://github.com/towerofhanoi
-#addthis_id: 
 post_limit: 5
-
 # Social usernames/URLs
 twitter_username: towerofhanoi
 github_username: towerofhanoi
