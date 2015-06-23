@@ -1,13 +1,13 @@
 # Site settings
 title: "Tower of Hanoi"
-email: info@changeme.me
+email: towerofhanoictf@gmail.com
 description: "CTFs write-ups by the PoliMi Security Team."
 baseurl: ""
 url: "http://towerofhanoi.github.io/"
 title_description: "Badass students doing things on their PCs? Check. Soulless coding monkeys solving security challenges? Check. Handsome Italian guys better than Gordon Ramsey? Check. Perfectly and lovely written write-ups? Check. Sounds perfect."
-google_analytics: ""
+#google_analytics: ""
 title_image: "/img/logo.png"
-#disqus_account: cartenoire
+disqus_account: towerofhanoi
 github_repository: https://github.com/towerofhanoi
 post_limit: 5
 # Social usernames/URLs
