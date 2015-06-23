@@ -6,22 +6,22 @@ baseurl: ""
 url: "http://towerofhanoi.github.io/"
 title_description: "Badass students doing things on their PCs? Check. Soulless coding monkeys solving security challenges? Check. Handsome Italian guys better than Gordon Ramsey? Check. Perfectly and lovely written write-ups? Check. Sounds perfect."
 title_image: "http://polictf.it/images/logo.png"
-google_analytics: "UA-20365477-4"
+#google_analytics: ""
 #disqus_account: cartenoire
 github_repository: https://github.com/towerofhanoi
-addthis_id: ra-513c6fa83da6ec67
+#addthis_id: 
 post_limit: 5
 
 # Social usernames/URLs
 twitter_username: towerofhanoi
 github_username: towerofhanoi
-#linkedin_link: http://carte-noire.jacobtomlinson.co.uk/
-#google_plus_link: http://carte-noire.jacobtomlinson.co.uk/
-#stackoverflow_link: http://carte-noire.jacobtomlinson.co.uk/
+#linkedin_link: 
+#google_plus_link: 
+#stackoverflow_link: 
 
 # Footer
 footer_left: "Theme 'Carte Noire' by Jacob Tomlinson"
-#footer_right: "&lt;/&gt; on <a href=\"https://github.com/jacobtomlinson/carte-noire\">Github</a> &nbsp;<i class=\"fa fa-github-alt\"></i>"
+#footer_right: ""
 # Build settings
 markdown: redcarpet
 redcarpet:
