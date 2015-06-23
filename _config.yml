@@ -21,7 +21,7 @@ github_username: towerofhanoi
 
 # Footer
 footer_left: "Theme 'Carte Noire' by Jacob Tomlinson"
-#footer_right: ""
+footer_right: "Customized by the Tower of Hanoi team."
 # Build settings
 markdown: redcarpet
 redcarpet:
