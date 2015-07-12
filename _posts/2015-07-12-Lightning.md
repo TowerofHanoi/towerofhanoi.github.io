@@ -37,3 +37,4 @@ The second complication was that after building the circuit, the display woud sh
 Solution: Flag is 6;;22BB6
 
 The [schematic](/img/polictf2015-lightning-schematic.jpeg) of the challenge.
+![schematic](/img/polictf2015-lightning-schematic.jpeg)
