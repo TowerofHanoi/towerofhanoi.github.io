@@ -6,9 +6,7 @@ summary:    Hiding control flow using C++ exceptions
 categories: write-ups
 tags:
  - PoliCTF
- - Crypto 
- - Exceptions
- - MIPS
+ - Crypto
 ---
 
 ```
