@@ -14,6 +14,8 @@ What do we have here? It seems a normal session between a user and some google s
 ```
 
 
+
+
 The title is a hint: the server tells the client that the communication is encrypted with a certain ciphersuite, while actually the message number 13 has been tampered.
 
 Since message 13 has been tampered with: in the field "encrypted data", the original

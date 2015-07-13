@@ -10,6 +10,7 @@ title_image: "/img/logo.png"
 disqus_account: towerofhanoi
 github_repository: https://github.com/towerofhanoi
 post_limit: 5
+more: "read the full article"
 # Social usernames/URLs
 twitter_username: towerofhanoi
 github_username: towerofhanoi
@@ -20,6 +21,9 @@ github_username: towerofhanoi
 # Footer
 footer_left: "Theme 'Carte Noire' by Jacob Tomlinson"
 footer_right: "Customized by the Tower of Hanoi team."
+
+excerpt_separator: "\n\n\n\n"
+
 # Build settings
 markdown: redcarpet
 redcarpet:

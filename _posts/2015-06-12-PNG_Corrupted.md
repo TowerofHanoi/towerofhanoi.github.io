@@ -16,6 +16,10 @@ This was the challenge description:
 
 > We received this PNG file, but we're a bit concerned the transmission may have not quite been perfect.
 
+
+
+
+
 It was easy to understand we had to repair a PNG file, but first, we checked what we had in our hands. So, we ran `file` on the challenge file:
 
     corrupt_735acee15fa4f3be8ecd0c6bcf294fd4.png: data

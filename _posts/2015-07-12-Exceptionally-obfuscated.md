@@ -16,6 +16,10 @@ The challenge description is:
 
 	Yet another license manager trying to protect a propietary application. The main application calls it with a challenge '84563472956326492361085746284624', the license key, and expects a response that is internally called a 'flag'. I wonder if the've implemented it securely with real crypto or it's just some crap hidden behind a bit of security through obscurity. Only one way to find out...
 
+
+
+
+
 The file for the challenge is an .ipk package for OpenWRT (backfire) containing a MIPS binary. Note that the ipk file was recereated by hand as the build system of OpenWRT strips the binary aggressively, but stripping only makes a challenge more boring imho.
 
 When it comes to programming, some developers like the idea of breaking complex programs in tiny, self-contained functions thinking that they can get rid of complexity in this way. However, especially if brought to the extreme, this forces who reads the code to keep a "mental call stack" to get the big picture of what is happening (so the complexity is still there!).
