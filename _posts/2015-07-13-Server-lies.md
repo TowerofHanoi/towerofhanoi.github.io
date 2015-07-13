@@ -9,9 +9,8 @@ tags:
  - Crypto
 ---
 
-```
-What do we have here? It seems a normal session between a user and some google servers, but actually one of them is lazy and it's lying on a couch. What a bad luck! Will you be able to exploit this unforgivable behaviour?
-```
+> What do we have here? It seems a normal session between a user and some google servers, but actually one of them is lazy and it's lying on a couch. What a bad luck! Will you be able to exploit this unforgivable behaviour?
+
 
 
 
@@ -32,15 +31,15 @@ has been replaced with
 
 Padded with as many 00 as needed to match the original length.
 
-Discarding the final 00 and converting ```93a3c4b2c570e768f4044e0a4c5aeab7b1e2e26ac8371117``` to an integer value we get
-```n = 3620115404019777021855203292005859579843541360704566530327i``` which can easily be factorized in
-```p = 49727547581930298376698201253, q = 72798993315633226794104718859```.
+Discarding the final 00 and converting `93a3c4b2c570e768f4044e0a4c5aeab7b1e2e26ac8371117` to an integer value we get
+`n = 3620115404019777021855203292005859579843541360704566530327i` which can easily be factorized in
+`p = 49727547581930298376698201253, q = 72798993315633226794104718859`.
 
 
 n can be used as a 192 bits rsa modulus in a school textbook rsa implementation.
 Message 14 has been altered with the same procedure by injecting the value
-```925a684f87209401f4213cf1a6eca21c62d12703d61416bd``` which is the ciphertext encrypted
-with the public key ```<e,n> = <65537, n>```
+`925a684f87209401f4213cf1a6eca21c62d12703d61416bd` which is the ciphertext encrypted
+with the public key `<e,n> = <65537, n>`
 
 By factoring n and guessing e (really easy, since 65537 is by far the most common
 choice for the encryption exponent),

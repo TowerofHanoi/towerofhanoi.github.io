@@ -12,7 +12,7 @@ tags:
 
 The challenge description is:
 
-	You work as a security consultant, and one day a company calls you to solve a curious problem: after one night the company building was hit by a lightning, the vault could no longer be opened with the code, which is 0994. Unfortunately, the vault control hardware is inside the vault itself. You start building a breadboard prototype of the vault circuit, and after a lot of modeling and experiments, you come to the conclusion that the lightning has caused a "stuck at 1" fault on pin 14 of IC6. Based on the circuit diagram you come up with a code that could open the faulty vault. The flag is the concatenation of what appears on the display, and what you have to type in the keyboard. N.B. Flag is not in the format flag{.*} 
+> You work as a security consultant, and one day a company calls you to solve a curious problem: after one night the company building was hit by a lightning, the vault could no longer be opened with the code, which is 0994. Unfortunately, the vault control hardware is inside the vault itself. You start building a breadboard prototype of the vault circuit, and after a lot of modeling and experiments, you come to the conclusion that the lightning has caused a "stuck at 1" fault on pin 14 of IC6. Based on the circuit diagram you come up with a code that could open the faulty vault. The flag is the concatenation of what appears on the display, and what you have to type in the keyboard. N.B. Flag is not in the format flag{.*} 
 
 
 
@@ -38,7 +38,7 @@ First, the mystery chip. The breadboard contains a surface mount ceramic package
 
 The second complication was that after building the circuit, the display woud show numbers in reverse order. This was due to the display addressing scheme. To solve this I first thought to use a 4029 presettable downcounter instead of a 4518, but it counted on the rising edge and not the falling one, so the 4518 remained. Based on the feedback from players, more than a team was stuck for this issue for a while.
 
-Solution: Flag is 6;;22BB6
+Solution: Flag is `6;;22BB6`
 
 The [schematic](/img/polictf2015-lightning-schematic.jpeg) of the challenge.
 ![schematic](/img/polictf2015-lightning-schematic.jpeg)
