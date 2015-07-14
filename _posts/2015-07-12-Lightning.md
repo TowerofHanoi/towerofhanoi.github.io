@@ -3,7 +3,7 @@ title:      PoliCTF 2015 - Lightning
 author:     beta4
 date:       2015-07-12 12:53:00
 summary:    Reversing electronic circuits
-categories: write-ups
+categories: PoliCTF2015 Grabbag
 tags:
  - PoliCTF
  - Grab Bag

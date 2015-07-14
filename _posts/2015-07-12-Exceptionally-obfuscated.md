@@ -3,7 +3,7 @@ title:      PoliCTF 2015 - Exceptionally obfuscated
 author:     beta4
 date:       2015-07-12 12:06:00
 summary:    Hiding control flow using C++ exceptions
-categories: write-ups
+categories: PoliCTF2015 Reversing
 tags:
  - PoliCTF
  - Reversing

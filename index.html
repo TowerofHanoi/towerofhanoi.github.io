@@ -35,6 +35,8 @@ layout: default
                             <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
                             <br> 
                             <small>{{ post.date | date: "%B %-d, %Y" }} by {{ post.author }}</small>
+			    <br>
+			    <small>In short: {{post.summary}}</small>
                         </li>
                         {{ post.excerpt }}
                         <footer>
