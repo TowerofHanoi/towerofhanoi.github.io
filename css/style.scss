@@ -75,7 +75,7 @@ a:hover {
 }
 
 ul {
-    list-style-type: none;
+	list-style-type: none;
 }
 
 .navbar, .nav {
@@ -101,10 +101,10 @@ ul {
 }
 
 .clearfix:after {
-   content: " ";
-   display: block;
-   height: 0;
-   clear: both;
+	content: " ";
+	display: block;
+	height: 0;
+	clear: both;
 }
 
 .header {
@@ -195,7 +195,12 @@ ul {
 		-moz-transition: 0.3s;
 		transition: 0.3s;
 	}
-
+	.fa-search {
+		color: white
+	}
+	.fa-search:hover {
+		color: $light-blue
+	}
 	.fa-twitter:hover {
 		color: $twitter;
 	}
@@ -384,6 +389,12 @@ ul {
 	margin-left: 0px;
 	margin-right: 0px;
 
+	.gravatar {
+		width: 100%;
+		margin-top: -40px;
+		text-align: center;
+	}
+
 	@media (min-width: $screen-md-min) {
 		margin-left: -15px;
 		margin-right: -15px;
@@ -407,7 +418,7 @@ ul {
 
 	#search-input:focus {
 		border: none;
-  }
+	}
 
 	.content-panel {
 		padding-left: 10px;
@@ -424,6 +435,14 @@ ul {
 	height:100%;
 	max-height: 100%;
 
+	.content-panel {
+		.author {
+			text-align: center;
+		}
+		.read-time{
+			text-align: center;
+		}
+	}
 	h1, h2, h3, h4, h5, h6 {
 		font-family: 'Montserrat', sans-serif;
 		margin-bottom: 10px;
@@ -556,9 +575,9 @@ ul {
 			img {
 				max-width: 100%;
 				padding: 10px;
-    		display: block;
-    		margin-left: auto;
-    		margin-right: auto
+				display: block;
+				margin-left: auto;
+				margin-right: auto
 			}
 
 			li {
@@ -568,7 +587,7 @@ ul {
 			blockquote {
 				position: relative;
 				width: 100%;
-		    margin-left: -15px;
+				margin-left: -15px;
 				padding-right: 45px;
 				background-color: $darker;
 				color: white;
@@ -583,20 +602,20 @@ ul {
 				}
 
 				p {
-			    margin: 0;
-			    padding: 15px;
+					margin: 0;
+					padding: 15px;
 					z-index: 0;
 				}
 
 				:before {
-    			font-family: "Times New Roman";
+					font-family: "Times New Roman";
 					color: $light-medium;
-			    content: "“";
-			    position: absolute;
-			    top: 15px;
-			    left: 15px;
-			    font-size: 65px;
-			    font-weight: bold;
+					content: "“";
+					position: absolute;
+					top: 15px;
+					left: 15px;
+					font-size: 65px;
+					font-weight: bold;
 				}
 
 			}
@@ -606,8 +625,8 @@ ul {
 			}
 
 			.aligncenter {
-			    display: block;
-			    margin: 5px auto 5px auto;
+				display: block;
+				margin: 5px auto 5px auto;
 			}
 
 			.highlight {
