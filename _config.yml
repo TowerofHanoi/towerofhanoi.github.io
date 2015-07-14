@@ -28,6 +28,6 @@ excerpt_separator: "\n\n\n\n"
 markdown: redcarpet
 redcarpet:
   extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
-permalink: /:year/:categories/:title/
+permalink: /:categories/:title/
 exclude: [vendor]
 defaults: [{scope: {path: ""}, values: {layout: "post"}}]
