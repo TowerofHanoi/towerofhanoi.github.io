@@ -33,7 +33,7 @@ Padded with as many 00 as needed to match the original length.
 
 Discarding the final 00 and converting `93a3c4b2c570e768f4044e0a4c5aeab7b1e2e26ac8371117` to an integer value we get
 `n = 3620115404019777021855203292005859579843541360704566530327i` which can easily be factorized in
-`p = 49727547581930298376698201253, q = 72798993315633226794104718859`.
+`p = 49727547581930298376698201253`, `q = 72798993315633226794104718859`.
 
 
 n can be used as a 192 bits rsa modulus in a school textbook rsa implementation.
