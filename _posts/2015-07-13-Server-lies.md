@@ -2,7 +2,7 @@
 title:      PoliCTF 2015 - Even the server lies (on a couch unfortunately)
 author:     cloudstrife
 date:       2015-07-13 07:56:00
-summary:    Hiding control flow using C++ exceptions
+summary:    Exploiting weak RSA encryption
 categories: PoliCTF2015 Crypto
 tags:
  - PoliCTF
