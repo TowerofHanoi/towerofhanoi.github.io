@@ -14,6 +14,12 @@ Test your attack on a box with Linux >=3.4!
 Connect to school.fluxfingers.net:1514
 
 
+
+
+
+
+
+
 This challenge provided us with the executable and the source code. Let's analyze the binary and see what we find out:
     $ file hackme
     hackme: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.32, BuildID[sha1]=f46fbf9b159f6a1a31893faf7f771ca186a2ce8d, not stripped
