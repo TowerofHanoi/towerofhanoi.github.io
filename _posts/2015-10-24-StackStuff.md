@@ -276,7 +276,7 @@ for i in range(0, 16):
 
 And we have the flag: flag{MoRE_REtuRnY_tHAn_rop}
 
-## why and how does vsyscall emulation works
+# Why and how does vsyscall emulation works
 The need for vsyscall emulation is as described in the resources mentioned before.
 
 You can see in [vsyscall_emu_64.S](https://github.com/torvalds/linux/blob/v4.1/arch/x86/kernel/vsyscall_emu_64.S#L2)
