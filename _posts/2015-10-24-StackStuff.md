@@ -213,7 +213,6 @@ We can also notice another thing: 0x7ffd46f25118 is very similar to the return a
 Good! We're almost there! On the stack we have 0x00007f98631f6177, and we want to return to 0x00007f98631f808b, that is, just after out require_auth() function. We know that pages are aligned, so we know that the last 12 bits of the address where we want to jump to are fixed to 0x08b. We overwrite 16 bits, so we are left with 4 unknown bits... Well, I think that a little of brute force won't be so bad, after all. Anyway, we still have stuff on the stack (or should I say stackstuff?) that we want to get rid of. If only I could make a pop-ret here!
 
 
-~q3_C0d3
 
 # Looking for something useful
 
@@ -275,6 +274,8 @@ for i in range(0, 16):
 {% endhighlight %}
 
 And we have the flag: flag{MoRE_REtuRnY_tHAn_rop}
+
+~ q3_C0d3
 
 # Why and how does vsyscall emulation works
 The need for vsyscall emulation is as described in the resources mentioned before.
