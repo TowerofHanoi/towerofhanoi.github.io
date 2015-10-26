@@ -1,6 +1,6 @@
 ---
 title:      Hack.lu 2015 - Stackstuff 150
-author:     Alessandro "q3_C0d3" Guagnelli
+author:     Alessandro "q3_C0d3" Guagnelli + ocean
 date:       2015-10-23 09:00:00
 summary:    Stuck overflow with PIE
 categories: Hack.lu 2015 Exploitable
@@ -212,6 +212,9 @@ We can also notice another thing: 0x7ffd46f25118 is very similar to the return a
 
 Good! We're almost there! On the stack we have 0x00007f98631f6177, and we want to return to 0x00007f98631f808b, that is, just after out require_auth() function. We know that pages are aligned, so we know that the last 12 bits of the address where we want to jump to are fixed to 0x08b. We overwrite 16 bits, so we are left with 4 unknown bits... Well, I think that a little of brute force won't be so bad, after all. Anyway, we still have stuff on the stack (or should I say stackstuff?) that we want to get rid of. If only I could make a pop-ret here!
 
+
+~q3_C0d3
+
 # Looking for something useful
 
 We know that PIE is enabled, so addresses are changing everytime, but after all we don't need that much: pop-ret ret-ret are enough. After a few hours of digging, I found something that could easily bring us to get that damn flag. Running a couple of time the executable and mapping memory sections, I found that the vsyscall memory area had its address fixed
@@ -235,7 +238,21 @@ I hope that vsyscall has what we're looking for...
        0xffffffffff60000a:  int3   
        0xffffffffff60000b:  int3   
 
-Bingo! That's exactly what we need: a couple of syscall, and we're good to go. So we're gonna to return twice to 0xffffffffff600000 and then to our handle_request(), just after the require_auth() call! This is the final exploit (remember that we have to bruteforce 16 bits):
+Bingo! That's exactly what we need: a couple of syscall, and we're good to go.
+The first idea was to return twice to 0xffffffffff600009 and then to our handle_request(), just after the require_auth() call.
+Keep in mind that we have to bruteforce 16 bits.
+
+After trying we noticed that using 0xffffffffff600009 as a gadget resulted in a segfault.
+The reason for this odd behaviour is that starting from linux kernel 3.3/3.4 the vsyscall are emulated using a trap-based mechanism
+see [SROP](https://www.cs.vu.nl/~herbertb/papers/srop_sp14.pdf), [LWN](http://lwn.net/Articles/446528/),
+and [thisissecurity](http://thisissecurity.net/2015/01/03/playing-with-signals-an-overview-on-sigreturn-oriented-programming/) for more information.
+
+Since we just need to move further the stack to do the partial overwrite we can just call the address of time(...)/gettimeofday(...)/getcpu(...).
+We decided to use 0xffffffffff600000 (gettimeofday).
+This is possible because in di/si we have an address in a writeable memory page which contains
+password and input (more on this later).
+
+
 {% highlight python%}
 from pwn import *
 
@@ -258,3 +275,93 @@ for i in range(0, 16):
 {% endhighlight %}
 
 And we have the flag: flag{MoRE_REtuRnY_tHAn_rop}
+
+## why and how does vsyscall emulation works
+The need for vsyscall emulation is as described in the resources mentioned before 
+you can see here [vsyscall_emu_64.S](https://github.com/torvalds/linux/blob/v4.1/arch/x86/kernel/vsyscall_emu_64.S#L2)
+that the vsyscall page contains the gadget we need.
+
+Though a second look at how emulate_vsyscall is executed in
+[emulate_vsyscall(...)](https://github.com/torvalds/linux/blob/v4.1/arch/x86/kernel/vsyscall_64.c#L116)
+shows us that a few security checks are in place:
+
+{% highlight C %}
+    vsyscall_nr = addr_to_vsyscall_nr(address);
+
+    trace_emulate_vsyscall(vsyscall_nr);
+
+    if (vsyscall_nr < 0) {
+        warn_bad_vsyscall(KERN_WARNING, regs,
+                  "misaligned vsyscall (exploit attempt or buggy program) -- look up the vsyscall kernel parameter if you need a workaround");
+        goto sigsegv;
+    }
+
+    if (get_user(caller, (unsigned long __user *)regs->sp) != 0) {
+        warn_bad_vsyscall(KERN_WARNING, regs,
+                  "vsyscall with bad stack (exploit attempt?)");
+        goto sigsegv;
+    }
+{% endhighlight %}
+
+The author of this part of the kernel decided to mantain the same behaviour that a real vsyscall
+would have passing a wrong address, issuing a SIGSEGV if the called address is not good.
+As long as the ret instruction is emulated we're good to go:
+{% highlight C %}
+do_ret:
+    /* Emulate a ret instruction. */
+    regs->ip = caller;
+    regs->sp += 8;
+    return true;
+
+sigsegv:
+    force_sig(SIGSEGV, current);
+    return true;
+}
+{% endhighlight %}
+
+[addr_to_vsyscall(...)](https://github.com/torvalds/linux/blob/v4.1/arch/x86/kernel/vsyscall_64.c#L74)
+will make sure that the emulated syscall is called starting at the alignment address and be one of the three defined syscalls.
+
+{% highlight C %}
+static int addr_to_vsyscall_nr(unsigned long addr)
+{
+    int nr;
+
+    if ((addr & ~0xC00UL) != VSYSCALL_ADDR)
+        return -EINVAL;
+
+    nr = (addr & 0xC00UL) >> 10;
+    if (nr >= 3)
+        return -EINVAL;
+
+    return nr;
+}
+{% endhighlight %}
+
+
+The last part left to understand how this works is how intructions in the vsyscall area are "trapped",
+to do this we need to look at [fault.c](https://github.com/torvalds/linux/blob/v4.1/arch/x86/mm/fault.c#L774)
+which is responsible of handing faults, in particular the code which handles this is in the badarea_nosemaphore function.
+
+Looks like there is a VMA set up for the emulated vsyscall which explain why you can see this page as r-xp in maps/trace,
+but the actual physical page is setup via __set_fixmap:
+
+
+{% highlight C %}
+  if (vsyscall_mode != NONE)
+        __set_fixmap(VSYSCALL_PAGE, physaddr_vsyscall,
+                 vsyscall_mode == NATIVE
+                 ? PAGE_KERNEL_VSYSCALL
+                 : PAGE_KERNEL_VVAR);
+{% endhighlight %}
+
+{% highlight C %}
+#define __PAGE_KERNEL_VSYSCALL      (__PAGE_KERNEL_RX | _PAGE_USER)
+#define __PAGE_KERNEL_VVAR      (__PAGE_KERNEL_RO | _PAGE_USER)
+{% endhighlight %}
+
+This would explain why we are still able to read the page anyway but a fault gets generated by the mmu if we try to execute code from the vsyscall page in emulation mode.
+
+Thanks to TheJH from FluxFingers (the author of the challenge) for his help on writing this part of the writeup!
+
+~ ocean
