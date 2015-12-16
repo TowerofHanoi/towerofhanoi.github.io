@@ -1,6 +1,6 @@
 # Site settings
 title: "Tower of Hanoi"
-email: towerofhanoictf@gmail.com
+email: toh@necst.it
 description: "CTFs write-ups by the PoliMi Security Team."
 baseurl: ""
 url: "http://towerofhanoi.github.io/"
