@@ -22,6 +22,6 @@ In the *jeopardy-style* CTFs, teams are presented with a set of specific challen
 
 ## Contacts
 
-If you are interested, feel free to drop us a line! Our email address is towerofhanoictf@gmail.com.
+If you are interested, feel free to drop us a line! Our email address is toh@necst.it.
 
 If you would like to do a thesis or a project in the field of information security, or to learn more about our academic research activities, check out the [NECST Laboratory website](http://necst.it).
