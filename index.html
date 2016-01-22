@@ -35,7 +35,7 @@ layout: default
                         <li>
                             <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
                             <br> 
-                            <small>{{ post.date | date: "%B %-d, %Y" }} by {{ post.author }}</small>
+                            <small>{{ post.date | date: "%B %-d, %Y" }}{% if post.author %} by {{ post.author }} {% endif %}</small>
                             <br>
                             <small>In short: {{post.summary}}</small>
                         </li>
