@@ -31,12 +31,10 @@ layout: default
       <h1 class="header" itemprop="name">{{ page.title }}</h1>
 
       <div class="author">
-          <small><i>
-            {% if page.author %} by
+          <small><i>by
               <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-                <span itemprop="name">{{ page.author }}</span>
+                  <span itemprop="name">{% if page.author %}{{page.author}}{% else %}ToH Team{% endif %}</span>
               </span>
-            {% endif %}
             on <span itemprop="datePublished" content="{{page.date | date: '%Y-%M-%d'}}">{{ page.date | date: "%B %-d, %Y" }}</span>
             under {% if page.categories %}{% for category in page.categories limit:1 %}{{ category }}{% endfor %}{% endif %}
         </i></small>
