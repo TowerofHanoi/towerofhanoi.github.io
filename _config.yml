@@ -28,9 +28,7 @@ footer_right: "Customized by the Tower of Hanoi team."
 excerpt_separator: "\n\n\n\n"
 
 # Build settings
-markdown: redcarpet
-redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
+markdown: kramdown
 permalink: /:categories/:title/
 exclude: [vendor]
 defaults: [{scope: {path: ""}, values: {layout: "post"}}]
