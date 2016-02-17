@@ -35,7 +35,7 @@ layout: default
                         <li>
                             <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
                             <br> 
-                            <small>{{ post.date | date: "%B %-d, %Y" }} by {% if post.author %}{{ post.author }}{% else %}ToH Team{% endif %}</small>
+                            <small>{{ post.date | date: "%B %-d, %Y" }} by {% if post.author %}{{ post.author }}{% else %}ToH Team{% endif %}</small> &middot; <a href="{{ post.url }}#disqus_thread"></a>
                             <br>
                             <small>In short: {{post.summary}}</small>
                         </li>
