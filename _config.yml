@@ -27,8 +27,13 @@ footer_right: "Customized by the Tower of Hanoi team."
 
 excerpt_separator: "\n\n\n\n"
 
-# Build settings
 markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+highlighter: rouge
+
+# Build settings
 permalink: /:categories/:title/
 exclude: [vendor]
 defaults: [{scope: {path: ""}, values: {layout: "post"}}]
