@@ -42,7 +42,7 @@ layout: default
 
       <div class="read-time">
         <small>
-            {{ minutes }} minute read &middot; <a href="{{ page.url }}index.html#disqus_thread" data-disqus-identifier="{{page.url}}"></a>
+            {{ minutes }} minute read &middot; <a href="{{ page.url }}#disqus_thread"></a>
         </small>
       </div>
     </div>
@@ -116,7 +116,6 @@ layout: default
         this.experiment.enable_scroll_container = true;
     }
     var disqus_shortname = "{{ site.disqus_account }}"; // required: replace example with your forum shortname
-    var disqus_identifier = "{{ page.url }}";
     (function() {
      var dsq = document.createElement('script');
      dsq.type = 'text/javascript';
@@ -124,10 +123,6 @@ layout: default
      dsq.async = true;
      dsq.setAttribute('data-timestamp', +new Date());
      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-     var cnt = document.createElement('script');
-     cnt.type = 'text/javascript';
-     cnt.src = '//' + disqus_shortname + '.disqus.com/count.js';
-     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(cnt);
-})();
+    })();
 </script>
 {% endif %}
