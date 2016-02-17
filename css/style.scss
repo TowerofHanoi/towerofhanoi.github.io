@@ -283,31 +283,42 @@ blockquote {
 
 .highlight {
 
-	@include full-width-block();
+    @include full-width-block();
 
-	pre {
-		width: 100%;
-		text-align: left;
-		background-color: $darker;
-		color: $white;
-		font-size: $code-snippet-font-size;
-		border: none;
-		padding-left: 15px;
-		padding-top: 20px;
-		padding-bottom: 20px;
-		padding-right: 15px;
-		box-sizing: content-box;
-		border-radius: 0;
-		margin-bottom: 10px;
-		margin-top: 10px;
+    pre {
+        padding: 0;
+        margin: 0;
+        background-color: $darker;
+        color: $white;
+        border: none;
 
-		@media (min-width: $screen-sm-min) {
-			padding-left: 50px;
-			padding-right: 10px;
-			margin-bottom: 40px;
-			font-size: 15px;
-		}
-	}
+        @media (min-width: $screen-sm-min) {
+            font-size: 15px;
+        }
+
+    }
+
+    width: 100%;
+    text-align: left;
+    background-color: $darker;
+    color: $white;
+    font-size: $code-snippet-font-size;
+    border: none;
+    padding-left: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 15px;
+    box-sizing: content-box;
+    border-radius: 0;
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+    @media (min-width: $screen-sm-min) {
+        padding-left: 50px;
+        padding-right: 10px;
+        margin-bottom: 40px;
+        font-size: 15px;
+    }
 }
 
 p, ul, ol {
