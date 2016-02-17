@@ -18,6 +18,9 @@ github_username: towerofhanoi
 #google_plus_link: 
 #stackoverflow_link: 
 
+gems:
+  - jekyll-sitemap
+
 # Footer
 footer_left: "Theme 'Carte Noire' by Jacob Tomlinson"
 footer_right: "Customized by the Tower of Hanoi team."
