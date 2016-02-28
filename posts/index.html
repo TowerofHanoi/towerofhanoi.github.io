@@ -25,7 +25,7 @@ layout: default
           <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
           
           <br>
-          <small>{{ post.date | date: "%B %-d, %Y" }} by {{ post.author }}</small>
+          <small>{{ post.date | date: "%B %-d, %Y" }} by {% if post.author %}{{ post.author }}{% else %}ToH Team{% endif %} &middot; <a href="{{ post.url }}#disqus_thread" style="color: #969696;"></a></small>
         </li>
         {% if forloop.last %}
       </ul>
