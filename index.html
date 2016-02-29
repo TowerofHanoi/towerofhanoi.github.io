@@ -1,8 +1,6 @@
 ---
 layout: default
 ---
-
-
 <div class="container-fluid index">
     <div class="row">
         <div class="col-md-12 main content-panel">
@@ -13,23 +11,26 @@ layout: default
             <h1 class="header author-header" itemprop="headline">{{ site.title }}</h1>
 
             <div class="author-text">
-                {{ site.title_description }} [<a href="about/">More about us</a>]
+                {{ site.title_description }}
             </div>
-            <a href="{{site.baseurl}}/search">
-                <div class="links">
-                    <a href="/search.html"><i class="fa fa-search fa-2x"></i></a>
-                    {% if site.twitter_username %}<a href="http://www.twitter.com/{{ site.twitter_username }}" target="_new"><i class="fa fa-twitter fa-2x"></i></a>{% endif %}
-                    {% if site.linkedin_link %}<a href="{{ site.linkedin_link }}" target="_new"><i class="fa fa-linkedin fa-2x"></i></a>{% endif %}
-                    {% if site.google_plus_link %}<a href="{{ site.google_plus_link }}" target="_new"><i class="fa fa-google-plus fa-2x"></i></a>{% endif %}
-                    {% if site.github_username %}<a href="https://github.com/{{ site.github_username }}" target="_new"><i class="fa fa-github-alt fa-2x"></i></a>{% endif %}
-                    {% if site.stackoverflow_link %}<a href="{{ site.stackoverflow_link }}" target="_new"><i class="fa fa-stack-overflow fa-2x"></i></a>{% endif %}
-                    <a href="feed.xml" target="_new"><i class="fa fa-rss fa-2x"></i></a>
-                </div>
+
+            <div class="links-wrapper"><a class="btn btn-primary" role="button" href="/about">Who are we?</a>
+
+            <div class="links" style="float: right;">
+                <!-- <a href="/search.html"><i class="fa fa-search fa-2x"></i></a> -->
+                {% if site.twitter_username %}<a href="http://www.twitter.com/{{ site.twitter_username }}" target="_new"><i class="fa fa-twitter fa-2x"></i></a>{% endif %}
+                {% if site.linkedin_link %}<a href="{{ site.linkedin_link }}" target="_new"><i class="fa fa-linkedin fa-2x"></i></a>{% endif %}
+                {% if site.google_plus_link %}<a href="{{ site.google_plus_link }}" target="_new"><i class="fa fa-google-plus fa-2x"></i></a>{% endif %}
+                {% if site.github_username %}<a href="https://github.com/{{ site.github_username }}" target="_new"><i class="fa fa-github-alt fa-2x"></i></a>{% endif %}
+                {% if site.stackoverflow_link %}<a href="{{ site.stackoverflow_link }}" target="_new"><i class="fa fa-stack-overflow fa-2x"></i></a>{% endif %}
+                <a href="feed.xml" target="_new"><i class="fa fa-rss fa-2x"></i></a>
             </div>
+            </div>
+        </div>
 
             <div class="col-md-12 main content-panel">
                 <div class="articles">
-                    <h2>Latest Articles</h2>
+                    <h2>Latest <strike>Articles</strike> CTF writeups</h2>
                     <ul>
                         {% for post in site.posts | limit: site.post_limit %}
                         <li>

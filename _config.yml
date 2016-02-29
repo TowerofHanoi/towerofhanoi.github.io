@@ -17,6 +17,8 @@ github_username: towerofhanoi
 #linkedin_link: 
 #google_plus_link: 
 #stackoverflow_link: 
+#
+
 
 gems:
   - jekyll-sitemap
@@ -25,15 +27,32 @@ gems:
 footer_left: "Theme 'Carte Noire' by Jacob Tomlinson"
 footer_right: "Customized by the Tower of Hanoi team."
 
-excerpt_separator: "\n\n\n\n"
 
-markdown: kramdown
+# Handling Reading
+safe:         true
+include:      [".htaccess"]
+exclude:      [vendor]
+keep_files:   [".git", ".svn"]
+encoding:     "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
+# Conversion
+markdown:    kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
+  hard_wrap: false
+
 highlighter: rouge
+lsi:         false
+excerpt_separator: "\n\n\n\n"
+incremental: false
+
+# Outputting
+permalink: /:categories/:title/
+paginate_path: /page:num
+timezone:      null
 
 # Build settings
-permalink: /:categories/:title/
-exclude: [vendor]
 defaults: [{scope: {path: ""}, values: {layout: "post"}}]
+
