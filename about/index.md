@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Tower of Hanoi | About
+title: About
 ---
 
 Hello! We are the Tower of Hanoi (also known as Hanoiati), the Politecnico di

@@ -1,47 +1,39 @@
 ---
 layout: default
-title: Tower of Hanoi | All Posts
+title: Writeup Archive
 ---
-
-
-<div class="container-fluid index">
-  <div class="row index all-posts">
-    <div class="gravatar">
-      <a href="{{ site.url }}"><img src="{{ site.title_image }}" class="about-image" height="150" width="150" alt="{{ site.title }}" /></a>
-    </div>
-    <h1 class="header author-header">{{ site.author_name }}</h1>
-    <h2 class="header" itemprop="headline">All posts</h2>
-
-    {% for post in site.posts %}
-    {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
-    {% capture next_year %}{{ post.previous.date | date: "%Y" }}{% endcapture %}
-
-    {% if forloop.first %}
-    <div class="col-md-12 content-panel articles">
+{% capture mainblock %}
+<div class="index clearfix">
+{% for post in site.posts %}
+  {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+  {% capture next_year %}{{ post.next.date | date: "%Y" }}{% endcapture %}
+  {% if forloop.first %}
+    <div class="content-panel articles">
       <h2 id="{{ this_year }}-ref">{{ this_year }}</h2>
       <ul>
-        {% endif %}
-
+  {% else %}
+  {% if this_year != next_year %}
+    </ul>
+    </div>
+    <div class="content-panel articles">
+      <h2 id="{{ this_year }}-ref">{{ this_year }}</h2>
+      <ul>
+  {% endif %}
+  {% endif %}
         <li>
-          <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-          
+          <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>         
           <br>
-          <small>{{ post.date | date: "%B %-d, %Y" }} by {% if post.author %}{{ post.author }}{% else %}ToH Team{% endif %} &middot; <a href="{{ post.url }}#disqus_thread" style="color: #969696;"></a></small>
+          <span class="post-date">{{ post.date | date: "%B %-d, %Y" }} by {% if post.author %}{{ post.author }}{% else %}ToH Team{% endif %} &middot; <a href="{{ post.url }}#disqus_thread" style="color: #969696;"></a></span>
         </li>
-        {% if forloop.last %}
+
+  
+      
+  {% if forloop.last %}
       </ul>
     </div>
-    {% else %}
-    {% if this_year != next_year %}
-  </ul>
+  {% endif %}
+{% endfor %}
 </div>
-<div class="col-md-12 content-panel articles">
-  <h2 id="{{ next_year }}-ref">{{next_year}}</h2>
-  <ul>
-    {% endif %}
-    {% endif %}
+{% endcapture %}
 
-    {% endfor %}
-  </div>
-
-</div>
+{% include base.html %}

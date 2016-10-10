@@ -5,7 +5,7 @@ layout: default
     <div class="row">
         <div class="col-md-12 main content-panel">
             <div class="gravatar">
-                <a href="{{ site.url }}"><img src="{{ site.title_image }}" class="about-image" height="150" width="150" alt="{{ site.title }}" /></a>
+                <a href="{{ site.url }}"><img src="{{ site.title_image }}" class="about-image" alt="{{ site.title }}" /></a>
             </div>
 
             <h1 class="header author-header" itemprop="headline">{{ site.title }}</h1>
@@ -36,14 +36,10 @@ layout: default
                         <li>
                             <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
                             <br> 
-                            <small>{{ post.date | date: "%B %-d, %Y" }} by {% if post.author %}{{ post.author }}{% else %}ToH Team{% endif %} &middot; <a href="{{ post.url }}#disqus_thread" style="color: #969696;"></a></small>
+                            <span class="post-date">{{ post.date | date: "%B %-d, %Y" }} by {% if post.author %}{{ post.author }}{% else %}ToH Team{% endif %} &middot; <a href="{{ post.url }}#disqus_thread" style="color: #969696;"></a></span>
                             <br>
-                            <small>In short: {{post.summary}}</small>
+                            <span class="post-summary">In short: {{post.summary}}</span>
                         </li>
-                        {{ post.excerpt }}
-                        <footer>
-                            <p><a href="{{ post.url | prepend: site.baseurl }}">{{ site.more }} &raquo;</a></p>
-                        </footer>
                         <hr>
                         {% endfor %}
                         <li>

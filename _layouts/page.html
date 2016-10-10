@@ -1,28 +1,12 @@
 ---
 layout: default
 ---
-<div class="container-fluid single">
-    <div class="row">
-        <div class="col-md-12 content-panel">
-            <div class="gravatar" align="center">
-                <a href="{{ site.url }}"><img src="{{ site.title_image }}" class="about-image" height="150" width="150" alt="{{ site.title }}" /></a>
-            </div>
-            {% if site.data.thumbnail[page.thumbnail] %}
-            <div class="thumb">
-                <img itemprop="image" src="{{ site.data.thumbnail[page.thumbnail] }}" alt="Thumbnail: {{ page.thumbnail }}" />
-            </div>
-            {% elsif page.thumbnail %}
-            <div class="thumb">
-                <i class="fa fa-{{ page.thumbnail }} fa-4x"></i>
-            </div>
-            {% endif %}
 
-            <h1 class="header" itemprop="name">{{ page.title }}</h1>
-        </div>
-        <div class="col-md-12 article clearfix">
-            <div class="content-panel content">
-                <span itemprop="articleBody">{{ content }}</span>
-            </div>
+{% capture mainblock %}
+    <div class="article clearfix">
+        <div class="content-panel content">
+            <span itemprop="articleBody">{{ content }}</span>
         </div>
     </div>
-</div>
+{% endcapture %}
+{% include base.html %}
