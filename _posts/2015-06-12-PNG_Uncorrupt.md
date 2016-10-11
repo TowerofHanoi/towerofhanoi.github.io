@@ -8,6 +8,7 @@ tags:
  - PlaidCTF
  - Forensics
  - PNG
+ - 2015
 ---
 
 Me and my team, [Tower of Hanoi](https://www.polictf.it), have played the PlaidCTF 2015: while my teammates did reversing stuff, my friend john and I did this awesome forensic challenge.
