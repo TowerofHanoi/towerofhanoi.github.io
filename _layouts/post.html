@@ -8,27 +8,7 @@ layout: default
 {% if minutes == 0 %}{% assign minutes = 1 %}{% endif %}
 {% endif %}
 
-<div class="container-fluid single">
-  <div class="row">
-    <div class="col-md-12 content-panel">
-
-      <div class="gravatar" align="center">
-        <a href="{{ site.url }}"><img src="{{ site.title_image }}" class="about-image" height="150" width="150" alt="{{ site.title }}" /></a>
-      </div>
-
-
-      {% if site.data.thumbnail[page.thumbnail] %}
-      <div class="thumb">
-        <img itemprop="image" src="{{ site.data.thumbnail[page.thumbnail] }}" alt="Thumbnail: {{ page.thumbnail }}" />
-      </div>
-      {% elsif page.thumbnail %}
-      <div class="thumb">
-        <i class="fa fa-{{ page.thumbnail }} fa-4x"></i>
-      </div>
-      {% endif %}
-
-      <h1 class="header" itemprop="name">{{ page.title }}</h1>
-
+{% capture authorblock %}
       <div class="author">
           <small><i>by
               <span itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -44,8 +24,9 @@ layout: default
             {{ minutes }} minute read &middot; <a href="{{ page.url }}#disqus_thread"></a>
         </small>
       </div>
-    </div>
-    <div itemscope itemtype="http://schema.org/Article" class="col-md-12 article">
+{% endcapture %}
+{% capture mainblock %}
+    <div itemscope itemtype="http://schema.org/Article" class="article">
 
       <div class="content-panel content">
         <span itemprop="articleBody">{{ content }}</span>
@@ -104,10 +85,9 @@ layout: default
       </div>
     </div>
   </div>
+{% endcapture %}
 
-</div>
-
-</div>
+{% include base.html %}
 
 {% if site.disqus_account %}
 <script type="text/javascript">

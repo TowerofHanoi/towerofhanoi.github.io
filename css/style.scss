@@ -37,7 +37,9 @@ $font-header: 'Montserrat', sans-serif;
 $font-code: 'Anonymous Pro', monospace;
 
 $body-font-size: 16px;
-$code-snippet-font-size: 12px;
+$header-font-size: 32px;
+$big-header-font-size: 40px;
+$code-snippet-font-size: 13px;
 
 /* Globals */
 
@@ -119,14 +121,14 @@ ul {
 }
 
 .header {
-	font-size: 32px;
+	font-size: $header-font-size;
 	text-align: center;
 	margin-top: 20px;
 	margin-left: -0%;
 	width: 100%;
 
 	@media (min-width: $screen-sm-min) {
-		font-size: 40px;
+		font-size: $big-header-font-size;
 		margin-left: -10%;
 		width: 120%;
 	}
@@ -134,7 +136,6 @@ ul {
 
 .menu-button {
 	color: $white;
-	font-size: 24px;
 	position: fixed;
 	top: 10px;
 	left: 20px;
@@ -160,6 +161,22 @@ ul {
 	margin-top: 20px;
 	box-shadow: 0px 0px 0px 0px, 0px 6px 12px rgba(0, 0, 0, 0.2);
 	border-bottom: 5px solid $light-blue;
+
+	.about-image {
+		width: 100px;
+		height: 100px;
+
+		@media(max-width: $screen-md-min) {
+			width: 50px;
+			height: 50px;
+		}
+
+	}
+
+}
+
+.header-content-panel {
+	margin-top: 0px;
 }
 
 #my-menu {
@@ -294,11 +311,6 @@ blockquote {
         background-color: $darker;
         color: $white;
         border: none;
-
-        @media (min-width: $screen-sm-min) {
-            font-size: 15px;
-        }
-
     }
 
     width: 100%;
@@ -319,15 +331,13 @@ blockquote {
     @media (min-width: $screen-sm-min) {
         padding-left: 50px;
         padding-right: 10px;
-        margin-bottom: 40px;
-        font-size: 15px;
+        margin-bottom: 32px;
     }
 }
 
 p, ul, ol {
 
 	code {
-		font-size: 15px;
 		background-color: $darker;
 		color: $white;
 		padding: 0.5em;
@@ -343,16 +353,23 @@ p, ul, ol {
 	width: 100%;
 	padding: 0px;
 
+	margin: 0 auto;
+
 	@media (min-width: $screen-sm-min) {
 		width: 700px;
 		max-width:700px;
+	}
+
+	.about-image {
+		width: 120px;
+		height: 120px;
+		margin-bottom: 1em;
 	}
 
 	.header {
 		margin-top: 10px;
 		margin-left: 0%;
 		margin-bottom: 0px;
-		font-size: 32px;
 		width: 100%;
 
 		@media (min-width: $screen-lg-min) {
@@ -406,12 +423,11 @@ p, ul, ol {
 
 	.articles {
 		text-align: center;
-		font-size: 18px;
 
 		h2 {
 			margin-bottom: 30px;
 			color: $light-blue;
-			font-size: 23px;
+			font-size: 1.5em;
 		}
 
 		ul {
@@ -426,14 +442,23 @@ p, ul, ol {
 					color: $light-medium;
 				}
 
-				small {
+				.post-date {
 					font-size: 14px;
-					margin-top: -10px;
+					margin-top: -3px;
+					padding-top: 0px;
+					color: $light-medium;
+				}
+
+				.post-summary {
+					font-size: 14px;
+					margin-top: -3px;
 					padding-top: 0px;
 					color: $light-medium;
 				}
 
 			}
+
+			
 
 			li:nth-last-of-type(1) {
 
@@ -561,18 +586,18 @@ p, ul, ol {
 	}
 
 	h2 {
-		font-size: 30px;
+		font-size: 1.5em;
 	}
 
 	h3 {
-		font-size: 22px;
+		font-size: 1.2em;
 	}
 
 	p {
-		margin-bottom: 10px;
+		margin-bottom: 1em;
 
 		@media (min-width: $screen-sm-min) {
-			margin-bottom: 40px;
+			margin-bottom: 2em;
 		}
 	}
 
@@ -602,7 +627,6 @@ p, ul, ol {
 
 		.home {
 			margin-top: 10px;
-			font-size: 16px;
 
 			a {
 				color: $white;
@@ -620,23 +644,18 @@ p, ul, ol {
 	}
 
 	.article {
-		width: 100%;
-		margin-left: 0%;
 		padding: 0px;
-
-		@media (min-width: $screen-sm-min) {
-			width: 90%;
-			margin-left: 5%;
-		}
+		width: 90%;
+		max-width: 700px;
+		display: block;
+		margin: 0 auto;
 
 		@media (min-width: $screen-md-min) {
 			width: 70%;
-			margin-left: 15%;
 		}
 
-		@media (min-width: $screen-lg-min) {
-			width: 50%;
-			margin-left: 25%;
+		@media (min-width: $screen-sm-min) {
+			width: 90%;
 		}
 
 		.thumb {
@@ -653,13 +672,11 @@ p, ul, ol {
 		}
 
 		.author {
-			font-size: 20px;
 			text-align: center;
 			margin-bottom: 0px;
 		}
 
 		.read-time {
-			font-size: 16px;
 			text-align: center;
 			margin-bottom: 10px;
 			font-weight: 400;
@@ -669,7 +686,6 @@ p, ul, ol {
 		}
 
 		.content {
-			font-size: 18px;
 			line-height: 170%;
 			padding-left: 15px;
 			padding-right: 15px;
@@ -677,7 +693,6 @@ p, ul, ol {
 			padding-bottom: 10px;
 
 			@media (min-width: $screen-sm-min) {
-				font-size: 18px;
 				padding-left: 30px;
 				padding-right: 30px;
 				padding-top: 40px;
@@ -744,9 +759,6 @@ p, ul, ol {
 
 		}
 
-		.comments {
-		}
-
 		.related {
 			margin-top: 50px;
 			text-align: center;
@@ -757,7 +769,6 @@ p, ul, ol {
 
 				a {
 					color: $white;
-					font-size: 18px;
 					width: auto;
 					padding: 10px 20px;
 					background-color: $darker;
@@ -771,12 +782,9 @@ p, ul, ol {
 
 			.title {
 				padding-top:20px;
-				font-size: 24px;
 				margin-bottom: 20px;
 
-				@media (min-width: $screen-sm-min) {
-					font-size: 36px;
-				}
+				font-size: 1.8em;
 
 				a {
 					color: $white;
@@ -825,6 +833,8 @@ p, ul, ol {
 .footer {
 	width: 100%;
 	margin-left: 0%;
+
+	font-size: 0.8em;
 
 	.fa-heart {
 		color: $red;
