@@ -13,6 +13,10 @@ tags:
 > We found this executable and we think it must have something in common with the baddies' infrastructure.
 > We would be glad to understand what **`data`** they are hiding from us...
 
+## Did you know that...the challenge is open source?
+
+You can find all the mess in.... [HERE](https://github.com/peperunas/pasticciotto)!
+
 ## What does the server say?
 When the connection to the server is instantiated, the server sends the **opcode key** used by the remote Pasticciotto VM. The next step is to send some valid bytecode to be executed remotely. But... what?
 
@@ -429,7 +433,4 @@ The flag is: flag{m4nc14t1b1_stu_bellu_p4sticci0tt0}
 [*] Closed connection to pasticciotto.chall.polictf.it port 31337
 ```
 
-# Yeah ok... where is the repo?
-
-You can find them.... [HERE](https://github.com/peperunas/pasticciotto)!
 
