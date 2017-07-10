@@ -18,18 +18,18 @@ tags:
 
 ## Program description
   
-Windows executable 32bit compiled with DEP+GS+ASLR enabled 
+Windows executable 32bit compiled with DEP+GS+ASLR enabled  
 The program contains a reverse shell, ready to be used.  
  
 -with option 1 you set ip and port  
--with option 2 you connect but still no shell, only tcp connection (note the attacker should be listening on a public ip for this to work)
+-with option 2 you connect but still no shell, only tcp connection (note the attacker should be listening on a public ip for this to work)  
 -with option 3 you launch the shell (cmd.exe) (Note this option can't actually be used because it checks the owner is the correct one: strcmp "Nesos\0")  
--in the menu there is a way to set the owner (as hex string)  
 
+In the menu there is a way to set the owner (as hex string)  
 Once you do this... you still can't spawn the shell, as the program says that you are not in "debug mode" and the shell is disabled (just a random excuse, internally it check for three differnt int values and they must be ==1). In order to solve the challenge you need to find a way to set the three checks to 1, then use option 3 to spawn the shell.  
 
 The vulnerability is in the SetOwner function: it has an overflow of 4 bytes while converting from the hex string in input to the ascii correspondent (eg "41414100" to "AAA")  
-The owner string is 8 bytes, while you can write 12, overflowing by 4 bytes. The string is intentionally very short because i don't want people to abuse this in unintended ways -- No rop or whatever; there must be only my bug!  
+The owner string is 8 bytes, while you can write 12, overflowing by 4 bytes. The string is intentionally very short because i don't want people to abuse this in unintended ways, no rop or whatever; there must be only my bug!  
 
 Following the owner string there is a pointer to it (that can be overwritten).  
 Since SetOwner function write where that pointer point we gain a write-what-where primitive of 12 bytes.  
@@ -46,9 +46,9 @@ First thing to do is use `PrintShellcode` option; this will print a small piece 
 `text:00401566 mov eax, ___security_cookie`  
 
 Since the exe is 32bit and 32bit doesn't support *HighEntropyVA* the exe is randomized as a single block (and not each section separatly).  
-With this leak of the *.data* section location we can compute the location of the *ImageBase* and *.text* sections.
+With this leak of the *.data* section location we can compute the location of the *ImageBase* and *.text* section.
 
-`leakVA-stackCookieRVA=ImageBase`  
+`ImageBase=leakVA-stackCookieRVA`  
 
 There are three functions that sets the "debug mode" one for each check; they are never used, but can be found if you search references to the checks:
 
@@ -124,9 +124,10 @@ When we exit, they will be called in this order and *cmd* will be launched just 
 
 - Setting all three checks by using the write-what-where primitive: after setting two out of three you will not be able to change where.
 - Setting the TLS array to set all three checks: since tls is triggered on close you will have a program that pass the checks... but a closed program is useless.
-- A ROP: you don't know where stack is and also if you somehow know, you can't do this because you don't know where WinExec is:
-`setowner1: <cmd\0><dummy4bytes><setowner stack return address>`
-`setowner2: <winexec><return addr of winexec=main><ourcmd above><uCmdShow (can't be set by rop how we want but we don't care)>`
+- A ROP: you don't know where stack is and also if you somehow know, you can't do this because you don't know where WinExec is:  
+```setowner1: <cmd\0><dummy4bytes><setowner stack return address>```  
+```setowner2: <winexec><return addr of winexec=main><ourcmd above><uCmdShow>```  
+(uCmdShow can't be set by rop how we want but we don't care)
 - Using a single TLS that point in the middle of SpawnShell (so we skip checks): i set the program to be opened before checks and open it after checks; skipping them you will skip also the string initialization so you will spawn nothing  
 
 If i'm right you can't do rop (return oriented programming) because there are only 12 bytes (3 addresses) and the above functions are stdcall with a dummy parameter; also there shouldn't be a stack leak.  
@@ -166,6 +167,8 @@ Judging from the comments I'd say mission accomplished ;)
 - solved it with the callbacks, was a cool idea!
 - argh, i also thought tls was only on startup :'(
 
-Thanks anyone for playing!
-Greetings from Italy
-Nesos
+**[Download python exploit script]({{ site.url }}/writeups_files/EzWinShell/nesospwn.py)**  
+
+Thanks anyone for playing!  
+Greetings from Italy  
+Nesos   
