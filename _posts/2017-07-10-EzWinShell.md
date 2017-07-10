@@ -1,5 +1,5 @@
 ---
-title:      EzWinShell
+title:      PoliCTF 2017 - EzWinShell
 date:       2017-07-10
 summary:    Getting rce by chaining buffer overflow, write-what-where, tls callbacks
 categories: PoliCTF2017 Pwnable
