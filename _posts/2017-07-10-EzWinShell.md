@@ -169,6 +169,6 @@ Judging from the comments I'd say mission accomplished ;)
 
 **[Download python exploit script]({{ site.url }}/writeups_files/EzWinShell/nesospwn.py)**  
 
-Thanks anyone for playing!
-Greetings from Italy
-Nesos
+Thanks anyone for playing!  
+Greetings from Italy  
+Nesos   
