@@ -1,5 +1,5 @@
 ---
-title:      EzWinShell
+title:      PoliCTF 2017 - EzWinShell
 date:       2017-07-10
 summary:    Getting rce by chaining buffer overflow, write-what-where, tls callbacks
 categories: PoliCTF2017 Pwnable
@@ -167,9 +167,15 @@ Judging from the comments I'd say mission accomplished ;)
 - solved it with the callbacks, was a cool idea!
 - argh, i also thought tls was only on startup :'(
 
+<<<<<<< HEAD
 
 **[Download python exploit script]({{ site.url }}/writeups_files/EzWinShell/nesospwn.py)**  
 
 Thanks anyone for playing!  
 Greetings from Italy  
 Nesos  
+=======
+Thanks anyone for playing!
+Greetings from Italy
+Nesos
+>>>>>>> refs/remotes/TowerofHanoi/master
