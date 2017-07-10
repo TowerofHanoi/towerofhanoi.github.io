@@ -167,8 +167,8 @@ Judging from the comments I'd say mission accomplished ;)
 - solved it with the callbacks, was a cool idea!
 - argh, i also thought tls was only on startup :'(
 
-#### Full python exploit script:  
-**[https://github.com/Nesos-ita/PoliCTF2017-EzWinShell/blob/master/nesospwn.py](https://github.com/Nesos-ita/PoliCTF2017-EzWinShell/blob/master/nesospwn.py "Exploit script")**  
+
+**[Download python exploit script]({{ site.url }}/writeups_files/EzWinShell/nesospwn.py)**  
 
 Thanks anyone for playing!  
 Greetings from Italy  
