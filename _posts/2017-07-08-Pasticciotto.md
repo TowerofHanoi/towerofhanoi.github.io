@@ -156,7 +156,7 @@ shit
 ```
 
 Once the VM bytecode is reversed, the partecipant has the knowledge to **decrypt the server's VM data section** using the same algorithm shown above. 
-This has to be assembled through a program or a script (check out `assembler.py` in the Pasticciotto's repo!) due to the **opcodes key** changing each time the partecipant connected to the server.
+This has to be assembled through a program or a script (check out [`assembler.py`](https://github.com/peperunas/pasticciotto/blob/master/assembler/assembler.py)) due to the **opcodes key** changing each time the partecipant connected to the server.
 
 Here is an example of a working decryption algorithm:
 
