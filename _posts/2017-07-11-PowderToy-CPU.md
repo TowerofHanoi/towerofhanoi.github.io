@@ -31,7 +31,7 @@ Making a cpu is something that was on my "todo list" from some time and this was
 Here you can find a document describing the parts, how do they work, the program that it execute, and the flag.  
   
 **[Download pdf writeup]({{ site.url }}/writeups_files/PowderToyCPU/cpu-info.pdf)**  
-**[Download Challenge]({{ site.url }}/writeups_files/PowderToyCPU/PoliCTF-chall.cps)** 
+**[Download Challenge]({{ site.url }}/writeups_files/PowderToyCPU/PoliCTF-chall.cps)**  
 **[Download Solved challenge]({{ site.url }}/writeups_files/PowderToyCPU/PoliCTF-solved.cps)** 
   
 Thanks anyone for playing!  
