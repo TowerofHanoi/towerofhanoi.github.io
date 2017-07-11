@@ -27,7 +27,7 @@ The program contains a reverse shell, ready to be used.
 - With option 3 you launch the shell (cmd.exe) (Note this option can't actually be used because it checks the owner is the correct one: strcmp "Nesos\0")  
   
 In the menu there is a way to set the owner (as hex string)  
-Once you do this... you still can't spawn the shell, as the program says that you are not in "debug mode" and the shell is disabled (just a random excuse, internally it check for three differnt int values and they must be ==1). In order to solve the challenge you need to find a way to set the three checks to 1, then use option 3 to spawn the shell.  
+Once you do this... you still can't spawn the shell, as the program says that you are not in "debug mode" and the shell is disabled (just a random excuse, internally it check for three different int values and they must be ==1). In order to solve the challenge you need to find a way to set the three checks to 1, then use option 3 to spawn the shell.  
   
 The vulnerability is in the SetOwner function: it has an overflow of 4 bytes while converting from the hex string in input to the ascii correspondent (eg "41414100" to "AAA")  
 The owner string is 8 bytes, while you can write 12, overflowing by 4 bytes. The string is intentionally very short because i don't want people to abuse this in unintended ways, no rop or whatever; there must be only my bug!  
@@ -60,15 +60,15 @@ There are three functions that sets the "debug mode" one for each check; they ar
 here is the interesting part:  
   
 ```  
-char owner[8] = "";`  
-char \* ptrOwner = (char*)&owner;//SetOwner write where this points`  
-int \*debugModeHeap2 = NULL;//malloc at runtime`  
-int dummy = 0;`  
+char owner[8] = "";  
+char \* ptrOwner = (char*)&owner;//SetOwner write where this points  
+int \*debugModeHeap2 = NULL;//malloc at runtime  
+int dummy = 0;  
 ```  
   
-Since a check is near the pointer, we can overwrite the pointer, changing it to point to itself. This way we can still change "where" and also pass one of the three checks. We can solve this either by setting the pointer to the data section check or by pointing to the dummy int and setting it to 1. Meanwhile we also set the correct owner "Nesos\0".   
+Since a check is near the *ptrOwner* pointer, we can overwrite the *ptrOwner* pointer, changing it to point to itself. This way we can still change "where" and also pass one of the three checks. We can solve this either by setting the *debugModeHeap2* pointer so that it points to the data section check or by pointing to the dummy int and setting it to 1. Meanwhile we also set the correct owner "Nesos\0".   
   
-Changing the pointer itself is not a problem, as strncmp will use a different pointer to that string.  
+Changing the *ptrOwner* pointer is not a problem, as strncmp will use a direct reference to *owner* string.  
   
 Our first line of exploit will be (supposing no aslr):  
   
@@ -77,7 +77,7 @@ SetOwner("Nesos\x00AA"+p32(ownerPtrVA))
 4E65736F7300414100405020 .data:00405020= 0x00405020  
 ```  
   
-we can still control where the pointer points (the "where" of our write-what-where primitive). the pointer points to itself; we now overwrite the first check and also move the pointer to point to the tls callback array:  
+This will overwrite *ptrOwner*, we can still control where the pointer points (the "where" of our write-what-where primitive). We set the pointer so that it points to itself; we now overwrite the first check and also move the pointer to point to the tls callback array:  
   
 ```  
 SetOwner(p32(tlsCallbacksArrayVA)+p32(ownerPtrVA+8)+p32(1))  
@@ -121,24 +121,27 @@ We will set the three callbacks to:
   
 When we exit, they will be called in this order and *cmd* will be launched just before the program exit. Launching is set so that child will inherit handles and has stdio redirected, in this way also if main process is ended, the connection started by it will survive.  
   
-### Things that will not work  
+### Exploits that will not work  
   
 - Setting all three checks by using the write-what-where primitive: after setting two out of three you will not be able to change where.  
+You *Can't* change all three checks  because they are intentionally "far" and you can overwrite only 12 consecutive bytes  
 - Setting the TLS array to set all three checks: since tls is triggered on close you will have a program that pass the checks... but a closed program is useless.  
 - A ROP: you don't know where stack is and also if you somehow know, you can't do this because you don't know where WinExec is:  
-```setowner1: <cmd\0><dummy4bytes><setowner stack return address>```  
-```setowner2: <winexec><return addr of winexec=main><ourcmd above><uCmdShow>```  
+```
+setowner1: <cmd\0><dummy4bytes><setowner stack return address>  
+setowner2: <winexec><return addr of winexec=main><ourcmd above><uCmdShow>  
+```  
 (uCmdShow can't be set by rop how we want but we don't care)  
-- Using a single TLS that point in the middle of SpawnShell (so we skip checks): i set the program to be opened before checks and open it after checks; skipping them you will skip also the string initialization so you will spawn nothing  
+- Using a single TLS that point in the middle of SpawnShell (so that we skip checks): i set the program to be opened (*cmd*) before checks and open it after checks; skipping them you will skip also the string initialization so you will spawn nothing  
   
 If i'm right you can't do rop (return oriented programming) because there are only 12 bytes (3 addresses) and the above functions are stdcall with a dummy parameter; also there shouldn't be a stack leak.  
 Aother rop idea might be: return to one set check function; it has a pop of a parameter so you are left with only one address, the best you can do is probably to return a bit after main start (so that checks are not cleared) and do this N times. not sure it will work because you can't change anymore "where" of our primitive.  
   
-You *Can't* change all three checks  because they are intentionally "far" so if you change two of them you will lose the ability to change the pointer and you will be locked.   
+
   
 ### Difficulty  
   
-I have no idea... if you aren't used to mess with Windows internals it's quite hard, half undocumented thigs and rarely used, ntdll instruction, things that happens on closing... all this make me thing that is hard.  
+I have no idea... if you aren't used to mess with Windows internals it's quite hard, half-undocumented thigs and also rarely used, ntdll instruction, things that happens on closing... all this make me thing that is hard.  
 On the other side the exploit it kinda simple:  
 - press 4=leak -> aslr gone  
 - x3 set owner  
