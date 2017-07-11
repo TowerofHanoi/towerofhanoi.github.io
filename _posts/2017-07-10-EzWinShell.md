@@ -22,9 +22,9 @@ tags:
 Windows executable 32bit compiled with DEP+GS+ASLR enabled  
 The program contains a reverse shell, ready to be used.  
    
--with option 1 you set ip and port  
--with option 2 you connect but still no shell, only tcp connection (note the attacker should be listening on a public ip for this to work)  
--with option 3 you launch the shell (cmd.exe) (Note this option can't actually be used because it checks the owner is the correct one: strcmp "Nesos\0")  
+- With option 1 you set ip and port  
+- With option 2 you connect but still no shell, only tcp connection (note the attacker should be listening on a public ip for this to work)  
+- With option 3 you launch the shell (cmd.exe) (Note this option can't actually be used because it checks the owner is the correct one: strcmp "Nesos\0")  
   
 In the menu there is a way to set the owner (as hex string)  
 Once you do this... you still can't spawn the shell, as the program says that you are not in "debug mode" and the shell is disabled (just a random excuse, internally it check for three differnt int values and they must be ==1). In order to solve the challenge you need to find a way to set the three checks to 1, then use option 3 to spawn the shell.  
