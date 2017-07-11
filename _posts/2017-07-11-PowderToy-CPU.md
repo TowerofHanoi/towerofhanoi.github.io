@@ -24,7 +24,7 @@ tags:
 This CPU is a save file of Powder Toy;  
 From the [website](http://powdertoy.co.uk/): "The Powder Toy is a free physics sandbox game... The game provides you with various building materials, liquids, gases **and electronic components**"  
   
-I have, in a moment of madness/prowes, decided to build a cpu, painting it by hand pixel after pixel...  
+I have, in a moment of madness ;), decided to build a cpu, painting it by hand pixel after pixel...  
   
 Making a cpu is something that was on my "todo list" from some time and this was the perfect opportunity!  
   
