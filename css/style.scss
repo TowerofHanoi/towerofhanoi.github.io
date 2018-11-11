@@ -26,6 +26,7 @@ $medium-purple:  #480048;
 $regular-purple: #601848;
 $red:            #C04848;
 $orange:         #F07241;
+$toh_logo_col:   #ffa500;
 
 /* Responsive sizes */
 $screen-sm-min: 768px;
@@ -44,127 +45,126 @@ $code-snippet-font-size: 13px;
 /* Globals */
 
 html {
-	height: 100%;
-	overflow-x: hidden;
+    height: 100%;
+    overflow-x: hidden;
 }
 
 body {
-	font-family: $font-stack;
-	font-weight: 300;
-	background-color: $dark;
-	color: $white;
-	font-size: $body-font-size;
-	height: 100%;
-	width: 100%
+    font-family: $font-stack;
+    font-weight: 300;
+    background-color: $dark;
+    color: $white;
+    font-size: $body-font-size;
+    height: 100%;
+    width: 100%
 }
 
 pre, code {
-	font-family: $font-code;
+    font-family: $font-code;
 }
 
 table.highlighttable {
-	border-collapse: collapse;
-	border-radius: 3px;
-	width: 100%;
-	white-space: pre;
-	th, td {
-		border: 1px solid;
-	}
-	td {
-		pre {
-			margin: 0;
-			white-space: pre;
-		}
-	}
+    border-collapse: collapse;
+    border-radius: 3px;
+    width: 100%;
+    white-space: pre;
+    th, td {
+        border: 1px solid;
+    }
+    td {
+        pre {
+            margin: 0;
+            white-space: pre;
+        }
+    }
 }
 a, a:active {
-	color: $light-blue;
-	text-decoration: none;
+    color: $light-blue;
+    text-decoration: none;
 }
 
 a:hover {
-	color: $dark-blue;
-	text-decoration: none;
+    color: $dark-blue;
+    text-decoration: none;
 }
 
 ul {
-	list-style-type: none;
+    list-style-type: none;
 }
 
 .navbar, .nav {
-	background-color: $dark-blue;
+    background-color: $dark-blue;
 
-	.navbar-toggle {
-		margin-top: 10px;
-		padding-top: 0px;
-		padding-bottom: 20px;
-	}
+    .navbar-toggle {
+        margin-top: 10px;
+        padding-top: 0px;
+        padding-bottom: 20px;
+    }
 
-	li {
+    li {
 
-		a, a:active {
-			color: $white;
-		}
+        a, a:active {
+            color: $white;
+        }
 
-		a:hover {
-			color: $dark-blue;
-			text-decoration: none;
-		}
-	}
+        a:hover {
+            color: $dark-blue;
+            text-decoration: none;
+        }
+    }
 }
 
 .clearfix:after {
-	content: " ";
-	display: block;
-	height: 0;
-	clear: both;
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
 }
 
 .header {
-	font-size: $header-font-size;
-	text-align: center;
-	margin-top: 20px;
-	margin-left: -0%;
-	width: 100%;
+    font-size: $header-font-size;
+    text-align: center;
+    margin-top: 20px;
+    margin-left: -0%;
+    width: 100%;
 
-	@media (min-width: $screen-sm-min) {
-		font-size: $big-header-font-size;
-		margin-left: -10%;
-		width: 120%;
-	}
+    @media (min-width: $screen-sm-min) {
+        font-size: $big-header-font-size;
+        margin-left: -10%;
+        width: 120%;
+    }
 }
 
 .menu-button {
-	color: $white;
-	position: fixed;
-	top: 10px;
-	left: 20px;
-	cursor: pointer;
-	line-height: 1em;
-	padding: 2px 4px 2px 4px;
-	border: 1px solid #FFFFFF;
-	border-radius: 3px;
-	background-color: $dark;
-	z-index: 100;
-	@media (min-width: $screen-sm-min) {
-		top: 20px;
-		left: 40px;
-	}
+    color: $white;
+    position: fixed;
+    top: 10px;
+    left: 20px;
+    cursor: pointer;
+    line-height: 1em;
+    padding: 2px 4px 2px 4px;
+    border: 1px solid #FFFFFF;
+    border-radius: 3px;
+    background-color: $dark;
+    z-index: 100;
+    @media (min-width: $screen-sm-min) {
+        top: 20px;
+        left: 40px;
+    }
 }
 
 .content-panel {
-	background-color: $medium;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	padding-left: 30px;
-	padding-right: 30px;
-	margin-top: 20px;
-	box-shadow: 0px 0px 0px 0px, 0px 6px 12px rgba(0, 0, 0, 0.2);
-	border-bottom: 5px solid $light-blue;
+    background-color: $medium;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 20px;
+    box-shadow: 0px 0px 0px 0px, 0px 6px 12px rgba(0, 0, 0, 0.2);
+    border-bottom: 5px solid $toh_logo_col;
 
 	.about-image {
-		width: 100px;
-		height: 100px;
+		width: 80px;
 
 		@media(max-width: $screen-md-min) {
 			width: 50px;
@@ -190,7 +190,7 @@ ul {
 	}
 
 	a:hover {
-		color: $light-blue;
+		color: $toh_logo_col;
 	}
 
 	.pages {
@@ -202,6 +202,14 @@ ul {
 	.links {
 		text-align: left;
 	}
+
+    .about-image {
+        width: 35px;
+        max-width: 35px;
+        margin-right: 5px;
+    }
+
+
 }
 
 .links-wrapper {
@@ -230,7 +238,7 @@ ul {
 		color: white
 	}
 	.fa-search:hover {
-		color: $light-blue
+		color: $toh_logo_col
 	}
 	.fa-twitter:hover {
 		color: $twitter;
@@ -356,8 +364,8 @@ p, ul, ol {
 	margin: 0 auto;
 
 	@media (min-width: $screen-sm-min) {
-		width: 700px;
-		max-width:700px;
+		width: 800px;
+		max-width:800px;
 	}
 
 	.about-image {
@@ -379,12 +387,12 @@ p, ul, ol {
 	}
 
 	.content-panel:nth-of-type(1) {
-		border-bottom: 10px solid $light-blue;
+		border-bottom: 10px solid $toh_logo_col;
 	}
 
 	.author-header {
 		font-family: $font-header;
-		color: $light-blue;
+		color: $toh_logo_col;
 		margin-top: 0px;
 		padding-top: 15px;
 		font-size: 30px;
@@ -426,7 +434,7 @@ p, ul, ol {
 
 		h2 {
 			margin-bottom: 30px;
-			color: $light-blue;
+			color: $toh_logo_col;
 			font-size: 1.5em;
 		}
 
@@ -474,7 +482,7 @@ p, ul, ol {
 		}
 
 		a:hover {
-			color: $light-blue;
+			color: $toh_logo_col;
 		}
 
 	}
@@ -502,7 +510,7 @@ p, ul, ol {
 		}
 
 		a:hover {
-			color: $light-blue;
+			color: $toh_logo_col;
 		}
 
 		ul {
@@ -610,7 +618,7 @@ p, ul, ol {
 		}
 
 		a:hover {
-			color: $light-blue;
+			color: $toh_logo_col;
 		}
 
 		h4 {
@@ -730,7 +738,7 @@ p, ul, ol {
 				}
 
 				a:hover {
-					color: $light-blue;
+					color: $toh_logo_col;
 				}
 
 			}
@@ -866,5 +874,5 @@ p, ul, ol {
 code {
      white-space: pre-wrap;
      word-wrap: break-word;
-}
 
+}

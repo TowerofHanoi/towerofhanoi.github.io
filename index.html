@@ -3,12 +3,14 @@ layout: default
 ---
 <div class="container-fluid index">
     <div class="row">
-        <div class="col-md-12 main content-panel">
+        <div class="col-md-12 col-lg-12 main content-panel">
             <div class="gravatar">
-                <a href="{{ site.url }}"><img src="{{ site.title_image }}" class="about-image" alt="{{ site.title }}" /></a>
+                <a href="{{ site.url }}"><img src="{{ site.home_image }}" class="about-image" alt="{{ site.title }}" /></a>
             </div>
 
-            <h1 class="header author-header" itemprop="headline">{{ site.title }}</h1>
+            <h1 class="header author-header" itemprop="headline">
+                <img src="{{ site.logo_brand }}" alt="{{ site.title }}" style="display: block; width: 80%; max-width: 500px; margin: 0 auto;" />
+            </h1>
 
             <div class="author-text">
                 {{ site.title_description }}
@@ -28,8 +30,9 @@ layout: default
             </div>
         </div>
 
+        <div>
             <div class="col-md-12 main content-panel">
-                <div class="articles">
+                <div class="col-md-8 articles">
                     <h2>Latest <strike>Articles</strike> CTF writeups</h2>
                     <ul>
                         {% for post in site.posts | limit: site.post_limit %}
@@ -46,6 +49,12 @@ layout: default
                             <small><i><a href="/posts">more...</a></i></small>
                         </li>
                     </ul>
+                </div>
+                <div class="col-md-4">
+                    <a class="twitter-timeline"
+                     data-dnt="true" data-chrome="transparent nofooter noborders" data-height="800" data-link-color="#ffa500" data-theme="dark"
+                       href="https://twitter.com/towerofhanoi">Tweets by towerofhanoi</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </div>
             </div>
         </div>

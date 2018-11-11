@@ -4,9 +4,11 @@ email: toh@necst.it
 description: "CTFs write-ups by the PoliMi Security Team."
 baseurl: ""
 url: "http://toh.necst.it"
-title_description: "Badass students doing things on their PCs? Check. Soulless coding monkeys solving security challenges? Check. Handsome Italian guys better than Gordon Ramsey? Check. Perfectly and lovely written write-ups? Check. Sounds perfect."
+title_description: "Badass students doing things on their PCs? Check. Soulless coding monkeys solving security challenges? Check. Handsome Italian folks better than Gordon Ramsay? Check. Perfectly and lovely written write-ups? Check. Sounds perfect."
 #google_analytics: ""
-title_image: "/img/logo.png"
+title_image: "/img/circle-logo.png"
+logo_brand: "/img/home-brand.png"
+home_image: "/img/circle-logo.png"
 disqus_account: towerofhanoi
 github_repository: https://github.com/towerofhanoi
 post_limit: 5
