@@ -54,7 +54,7 @@ such as the DEF CON Qualifiers, PlaidCTF, CSAW, RuCTFe, and many others.
 In the meantime, we also created our own CTF: in [2012](https://2012.polictf.it), we
 go online with the first edition of the [PoliCTF](https://www.polictf.it).
 The experiment was successful, and we repeated it in [2015](https://2015.polictf.it)
-and [2017](https://www.polictf.it).
+and [2017](https://2017.polictf.it).
 
 In 2018, we joined other academic and non-academic Italian teams to get serious
 into qualifying to the DEF CON CTF (i.e., the most important CTF!). We create
