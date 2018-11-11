@@ -11,6 +11,10 @@ security. We love to play CTF and sometimes to organize them too (check out the
 Our [CTFTime profile](https://ctftime.org/team/300) lists the competitions we
 recently took part to.
 
+Since 2018, we are part of [mHACKeroni](https://mhackeroni.it): the union of
+5 Italian CTF teams, who joined their forces to qualify and participate to
+the DEF CON CTF Finals.
+
 We usually meet weekly in the [NECSTLab](http://necst.it), a research
 laboratory of the Politecnico di Milano that deals mainly with computer
 security and computer architectures.
