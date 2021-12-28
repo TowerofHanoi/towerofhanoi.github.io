@@ -2,7 +2,7 @@
 title: X-MAS CTF - CaramelPooler 
 author: Federico Villa
 date: 19/12/2021
-summary: Blockhain transaction data scraping
+summary: Blockchain transaction data scraping
 categories: XMASCTF2021 Ethereum
 tags:
 - X-MAS CTF
@@ -16,30 +16,30 @@ tags:
 # Challenge: **CaramelPooler**
 
 Description: 
-> Tokugawa shogunate cheated for a living. For that reason, you have to become shogun instead. Do it for Hideyoshi! <br />
-> nc challs.xmas.htsp.ro 8016 <br />
-> http://challs.xmas.htsp.ro:8017/ <br />
-> [Source](https://github.com/joswha/ethxmasctf2021/tree/main/caramelpool/contracts) <br />
+> Tokugawa shogunate cheated for a living. For that reason, you have to become shogun instead. Do it for Hideyoshi!  
+> nc challs.xmas.htsp.ro 8016  
+> http://challs.xmas.htsp.ro:8017/  
+> [Source](https://github.com/joswha/ethxmasctf2021/tree/main/caramelpool/contracts)  
 
-<br />
+
 
 ## Analizing Given Files:
 At first we need to understand what the provided contracts make:
-- **[Setup.sol](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/Setup.sol)** creates a new caramelPool contract passing it 10 ethereum addresses and also contain a [isSolved()](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/Setup.sol#L30-L32) function that checks if a variable in CaramelPool is different from an address. Setup.isSolved() returing a True value means we solve the challenge. <br /> 
-- **[CaramelPool.sol](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/CaramelPool.sol)** creates a certain number of tokens (total supply equal to 180000000) divided equally between ten addresses (the ten address provided during Setup.sol creation). The contract permits to tranfer those tokens between addresses (with the function [CaramelPool.transfer(fromAddress, toAddress)](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/CaramelPool.sol#L33-42)), to fund the pool and then withdraw (with the functions [CaramelPool.fundPool(fromAddress)](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/CaramelPool.sol#L44-50) and [CaramelPool.withdrawFromPool()](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/CaramelPool.sol#L52-58)). There's also a function to check the token balance of an address (CaramelPool.balanceOf(address)) and the **[becomeCaramelShogun()](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/CaramelPool.sol#L60-L64)** function, which checks if the balance of an address is equal to the total supply and, if so, turns that address into the **Shogun**. If the sender address is the Shogun, Setup.isSolved() returns true and the callenge is solved. <br /> 
-Even if it is not of useful to the solution, the CaramelPool.sol also contains the private function isContract(address) which checks if an address is a contract for duration. Just for more information, the method by which it is checked whether an address is a contract or no, is easily bypassable with [this](https://solidity-by-example.org/hacks/contract-size/) solution. <br /> 
+- **[Setup.sol](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/Setup.sol)** creates a new caramelPool contract passing it 10 ethereum addresses and also contain a [isSolved()](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/Setup.sol#L30-L32) function that checks if a variable in CaramelPool is different from an address. Setup.isSolved() returning a True value means we solve the challenge.  
+- **[CaramelPool.sol](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/CaramelPool.sol)** creates a certain number of tokens (total supply equal to 180000000) divided equally between ten addresses (the ten address provided during Setup.sol creation). The contract permits to tranfer those tokens between addresses (with the function [CaramelPool.transfer(fromAddress, toAddress)](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/CaramelPool.sol#L33-42)), to fund the pool and then withdraw (with the functions [CaramelPool.fundPool(fromAddress)](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/CaramelPool.sol#L44-50) and [CaramelPool.withdrawFromPool()](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/CaramelPool.sol#L52-58)). There's also a function to check the token balance of an address (CaramelPool.balanceOf(address)) and the **[becomeCaramelShogun()](https://github.com/TowerofHanoi/towerofhanoi.github.io/tree/master/writeups_files/XMAS-CTF/CaramelPooler/CaramelPool.sol#L60-L64)** function, which checks if the balance of an address is equal to the total supply and, if so, turns that address into the **Shogun**. If the sender address is the Shogun, Setup.isSolved() returns true and the callenge is solved.  
+Even if it is not of useful to the solution, the CaramelPool.sol also contains the private function isContract(address) which checks if an address is a contract for duration. Just for more information, the method by which it is checked whether an address is a contract or no, is easily bypassable with [this](https://solidity-by-example.org/hacks/contract-size/) solution. 
 
 To obtain these contracts and the blockchain used for the challenge, it is necessary to: `nc challs.xmas.htsp.ro 8016`. With this command it is possible, after selecting _launch new instance_ and solving a short pow with [hashcash](https://it.wikipedia.org/wiki/Hashcash), to obtain: an RPC endpoint, the address of the Setup.sol contract, a private key and a uuid (useful for obtaining the flag at the end of the challenge).
 
 ## Strategy
-As you can understand from the analysis of the two contracts, all we have to do is **transfer the tokens** from the 10 addresses declared in Setup.sol to the sender address with the function CaramelPool.fundPool() and CaramelPool.withdrawFromPool(). <br /> 
-The problem lies in **finding these 10 addresses**.
-All data on the blockchain, due to its use as a publicly distributed ledger, is public and therefore visible to anyone. <br /> 
-To retrieve all the data used by a particular contract when it was created and deployed, it is necessary to **find the block and the transaction** that generated it. From the input of the transaction it is possible to find out (in the form of bytecode) the data of the contract. <br /> 
+As you can understand from the analysis of the two contracts, all we have to do is **transfer the tokens** from the 10 addresses declared in Setup.sol to the sender address with the function CaramelPool.fundPool() and CaramelPool.withdrawFromPool().  
+The problem lies in **finding these 10 addresses**.  
+All data on the blockchain, due to its use as a publicly distributed ledger, is public and therefore visible to anyone.  
+To retrieve all the data used by a particular contract when it was created and deployed, it is necessary to **find the block and the transaction** that generated it. From the input of the transaction it is possible to find out (in the form of bytecode) the data of the contract.   
 
 ## Retrieving the transaction data
-Fortunately for every blockchain instance of the challenge, the last block is the one in which the contracts were created. To retreive the transaction data in this contract is possible to create a python script using the **[Web3.py](https://web3py.readthedocs.io/en/stable/) Python library**. <br /> 
-This library allows to interact with the Ethereum (and similar) blockchain. Here's a [quick reference](https://web3py.readthedocs.io/en/stable/quickstart.html) about how to install and use it. <br /> 
+Fortunately for every blockchain instance of the challenge, the last block is the one in which the contracts were created. To retreive the transaction data in this contract is possible to create a python script using the **[Web3.py](https://web3py.readthedocs.io/en/stable/) Python library**.   
+This library allows to interact with the Ethereum (and similar) blockchain. Here's a [quick reference](https://web3py.readthedocs.io/en/stable/quickstart.html) about how to install and use it.   
 The python script must:
 1. connect with the given RPC endpoint
 2. ask a node for the last block (which only contains the transaction of the generation of the challenge contracts)
@@ -66,7 +66,8 @@ The code output is the following **bytecode**:
 
 ## Analyze Bytecode
 To retrieve the 10 addresses used by the setup.sol contract all we need to do is analyze the bytecode.
-For the analyzation process we can get help from some tools like the _[pyevmasm](https://github.com/crytic/pyevmasm)_ library, with the useful `evmasm` command that permits to assemble or disassemble the Ethereum Virtual Machine bytecode. <br />  The addresses with the token are some of the correct addresses subject to a push operation (if an address is subject to a push 16 or 20 it should be padded with zeros). This work could also be done with some online disassembler like _[this](https://etherscan.io/opcode-tool)_ or more simply by noting that the bytecode has a _repetitive pattern_ that isolates the 10 desired addresses:
+For the analysis process we can get help from some tools like the _[pyevmasm](https://github.com/crytic/pyevmasm)_ library, with the useful `evmasm` command that permits to assemble or disassemble the Ethereum Virtual Machine bytecode.  
+The addresses with the token are some of the correct addresses subject to a push operation (if an address is subject to a push 16 or 20 it should be padded with zeros). This work could also be done with some online disassembler like _[this](https://etherscan.io/opcode-tool)_ or more simply by noting that the bytecode has a _repetitive pattern_ that isolates the 10 desired addresses:
 
 ```
 0x608060405234801561001057600080fd5b506000600a67ffffffffffffffff811115610054577f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b6040519080825280602002602001820160405280156100825781602001602082028036833780820191505090505b50905073
@@ -106,10 +107,10 @@ So the **ten addresses** are:
 
 ## Interacting with the contract and becoming Shōgun
 After finding the ten addresses containing the desired tokens, it is necessary to interact with the CaramelPool.sol contract and arriving at a balance equal to the total token supply.
-To interact with the blockchain we could both use the **Web3.py** python library or a web-based Solidity online IDE, **[Remix](http://remix.ethereum.org/)**. <br /> 
-With **Remix IDE** at first we have to upload the two contracts given in the _File Explorers_ tab and compile them with the correct version of Solidity (in this case the 0.8.0) in the _Solidy Compiler_ tab. <br /> 
-Then we load the contracts in the _Deploy & Run Transactions_ tab by connecting to the rpc endpoint given (switch the _Environment_ to _Web3 Provider_ giving the rpc endpoint link) and pasting the setup address in the _Load contract from Address_ field. <br /> 
-After this by clicking the _At Address_ button we load the Setup.sol and then by calling the Setup.carmelPool() function (clicking the _caramelPool_ button in the _Deployed Contracts_ section) we can get the CaramelPool.sol address. <br /> 
+To interact with the blockchain we could both use the **Web3.py** python library or a web-based Solidity online IDE, **[Remix](http://remix.ethereum.org/)**.  
+With **Remix IDE** at first we have to upload the two contracts given in the _File Explorers_ tab and compile them with the correct version of Solidity (in this case the 0.8.0) in the _Solidity Compiler_ tab.  
+Then we load the contracts in the _Deploy & Run Transactions_ tab by connecting to the rpc endpoint given (switch the _Environment_ to _Web3 Provider_ giving the rpc endpoint link) and pasting the setup address in the _Load contract from Address_ field.  
+After this by clicking the _At Address_ button we load the Setup.sol and then by calling the Setup.carmelPool() function (clicking the _caramelPool_ button in the _Deployed Contracts_ section) we can get the CaramelPool.sol address.  
 After loading CaramelPool.sol contract and calling the _CaramelPool.fundPool(fromAddress)_ function with the ten address found as a parameter we can have a withdram amount in the contract pool equal to the total supply. Then by calling the _CaramelPool.withdrawFromPool()_ function and _CaramelPool.becomeCaramelShogun()_ we can become the Shogun so if we call the _Setup.isSolved()_ function we get a true value.
 
 With **[Web3.py](https://web3py.readthedocs.io/en/stable/)** Python library. All we have to do is to know a private key account, the rpc endpoint link, the Setup.sol contract address and the ABI of the two contracts.
@@ -167,7 +168,7 @@ transaction = caramel.functions.becomeCaramelShogun().buildTransaction({
 print(setup.functions.isSolved().call())
 ```
 
-## Retreiving the flag
+## Retrieving the flag
 After the _Setup.isSolved()_ function returned a _True_ value we can get the flag by connect to the challenge server with `nc challs.xmas.htsp.ro 8016`, selecting _get flag_ and inserting the uuid given at the beginning of the challenge.
 
 Turns out that the flag was:
