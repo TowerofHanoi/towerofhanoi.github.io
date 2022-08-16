@@ -48,7 +48,7 @@ Upon receing an SMI and entering SMM the SMI handler is executed. It initially
 runs code in a weird real-mode-on-steroids operating mode, but can switch to
 32-bit protected mode, enable paging (and PAE), and even switch to 64-bit long
 mode (and use 5-level paging). After doing what's needed, the SMI handler can
-exit SMM with the [`RSM` instruction][x86-rsm], which restores the CPU state
+exit SMM with [the `RSM` instruction][x86-rsm], which restores the CPU state
 from the save state area in SMRAM.
 
 SMIs can be triggered by software using IO port `0xB2`, and this functionality
@@ -117,8 +117,9 @@ Address where I'm gonna run your code: 0x000000000517D100
 
 The EDK2 patch `0003-SmmCowsay-Vulnerable-Cowsay.patch` implements a UEFI SMM
 driver called `SmmCowsay.efi`: this driver will run in SMM, and registers an
-handler (through [`SmiHandlerRegister`][edk2-SmiHandlerRegister]) to be executed
-in SMM that prints text much like the [cowsay][man-cowsay] Linux command does:
+handler (through [the `SmiHandlerRegister` function][edk2-SmiHandlerRegister])
+to be executed in SMM that prints text much like the [cowsay][man-cowsay] Linux
+command does:
 
 ```c
   Status = gSmst->SmiHandlerRegister (
@@ -133,13 +134,13 @@ list of registered handlers and chooses the appropriate one to run.
 
 The next patch `0004-Add-UEFI-Binexec.patch` implements a normal UEFI driver
 called `Binexec.efi` which will interact both with us (through console
-input/output) and with the `SmmCowsay.efi` module to print the greeting banner
+input/output) and with the `SmmCowsay.efi` driver to print the greeting banner
 we see above when running challenge.
 
 In order to communicate with the `SmmCowsay.efi` driver, `Binexec.efi` sends a
-"message" through the
-[`->Communicate()` method][edk2-SmmCommunicationCommunicate] provided by
-[`EFI_SMM_COMMUNICATION_PROTOCOL`][edk2-EFI_SMM_COMMUNICATION_PROTOCOL]:
+"message" through
+[the `->Communicate()` method][edk2-SmmCommunicationCommunicate] provided by
+[the `EFI_SMM_COMMUNICATION_PROTOCOL` struct][edk2-EFI_SMM_COMMUNICATION_PROTOCOL]:
 
 ```c
     mSmmCommunication->Communicate(
@@ -383,12 +384,20 @@ of which we actually have a pointer in the `SystemTable`. We know the address of
 this does not really matter since it is a fixed address and there isn't any kind
 of address randomization going on.
 
-We need to get `SystemTable->BootServices->LocateProtocol`. We can do this
-pretty easily with a couple of MOV instructions. The debug artifacts provided
-with the challenge files also include all the structure definitions we need in
-the debug symbols, so we can check the DWARF info in
+We need to get `SystemTable->BootServices->LocateProtocol`. In theory all
+addresses are fixed in our working environment (both locally and remote) due to
+no ASLR being applied by EDK2, so we *could* just get the address of any
+function we need and do direct calls, but let's do it the right way because (1)
+we'll actually learn something, (2) we'll nonethless need it for the next
+challenges and most importantly (3) *I did not think about it originally and I
+already have the code to do it anyway :')*.
+
+We can get `LocateProtocol` pretty easily with a couple of MOV instructions. The
+debug artifacts provided with the challenge files also include all the structure
+definitions we need in the debug symbols, so we can check the DWARF info in
 `handout/edk2_artifacts/Binexec.debug` to get the offsets of the fields. I'll
-use [`pahole`][man-pahole] utility (from the `dwarves` Debian package) for this:
+use [the `pahole` utility][man-pahole] (from the `dwarves` Debian package) for
+this:
 
 ```c
 $ pahole -C EFI_SYSTEM_TABLE handout/edk2_artifacts/Binexec.debug
@@ -564,19 +573,25 @@ RAX  - 800000000000000F, RCX - 00000000000000B2, RDX - 00000000000000B2
 
 We hit the `ud2` in the `fail:` label and got a nice register dump, because
 `Communicate` returned `0x800000000000000F`: which according to the UEFI Spec
-(Appendix D - Status Codes) means `EFI_ACCESS_DENIED`. Indeed there is a gotcha:
-`SmmCowsay` is running in SMM, and although SMM can theoretically access all
-physical memory, UEFI SMM drivers cannot access *all* memory by default. A page
-table is set up by EDK2 code that denies access to various types of memory
-including normal UEFI driver data e.g. our shellcode buffer.
+(Appendix D - Status Codes) means `EFI_ACCESS_DENIED`.
 
-Looking at the code for `Binexec.efi` above, in the `Cowsay()` function the
-`EFI_SMM_COMMUNICATE_HEADER` is actually allocated using the library function
-`AllocateRuntimeZeroPool()`. We don't have a nice pointer to this function, but
-can allocate memory using either `BootServices->AllocatePool()` or
+Indeed there is a gotcha: even though the challenge author explicitly added an
+EDK2 patch to mark all all memory as RWX in the SMM page table
+(`0005-PiSmmCpuDxeSmm-Open-up-all-the-page-table-access-res.patch`), there is
+still a sanity check being performed on the SMM communication buffer,
+[as we can see in EDK2 source code][edk2-buffer-check], which errors out if the
+buffer resides in untrusted or invalid memory regions (like the one used for our
+shellcode). *Thanks to YiFei for pointing this out since I had not actually
+figured out the real reason behind the "access denied" when working on the
+challenge*.
+
+In fact, looking at the code for `Binexec.efi` above, in the `Cowsay()` function
+the `EFI_SMM_COMMUNICATE_HEADER` is actually allocated using the library
+function `AllocateRuntimeZeroPool()`. We don't have a nice pointer to this
+function, but can allocate memory using either `BootServices->AllocatePool()` or
 `BootServices->AllocatePages()` specifying the "type" of memory we want to
 allocate. The `EFI_MEMORY_TYPE` we want is
-[`EfiRuntimeServicesData`][edk2-EfiRuntimeServicesData], which will be
+[the type `EfiRuntimeServicesData`][edk2-EfiRuntimeServicesData], which will be
 accessible from SMM.
 
 ```python
@@ -669,7 +684,7 @@ Running...
                   ||     ||
 ```
 
-Reassembling it give us: `uiuctf{when_ring_zero_is_insufficient_35250e18}`.
+Reassembling it gives us: `uiuctf{when_ring_zero_is_insufficient_35250e18}`.
 
 ---
 
@@ -792,12 +807,12 @@ The problem is clear as day:
     goto out;
 ```
 
-Here we have a memcopy from the `->Data` field of the
-`EFI_SMM_COMMUNICATE_HEADER` (passed as `CommBuffer`) using the
+Here we have a memcpy-like function performing a copy from the `->Data` field of
+the `EFI_SMM_COMMUNICATE_HEADER` (passed as `CommBuffer`) using the
 `->MessageLength` field as size (passed as `CommBufferSize`). The size is
 trusted and used as is, so any size above 400 will overflow the
 `CHAR16 Message[200]` field of `mDebugData` and corrupt the `CowsayFunc`
-function pointer which is then called right away.
+function pointer, which is then called right away.
 
 
 ## Exploitation
@@ -805,8 +820,15 @@ function pointer which is then called right away.
 The situation seems simple enough: send 400 bytes of garbage followed by an
 address and get RIP control inside System Management Mode. Once we have RIP
 control, we can build a ROP chain to either (A) disable paging altogether and
-read the flag, or (B) disable CRO.WP (since the page table is read only) and
+read the flag, or (B) disable `CR0.WP` (since the page table is read only) and
 patch the page table entry for the flag to make it readable.
+
+Method A was the author's solution. In fact there already is
+[a nice segment descriptor][edk2-gdt] for 32-bit protected mode in the SMM GDT
+that we could use for the code segment (`CS` register). However I went with
+method (B) because it seemed more straightforward. *Ok, honestly speaking I
+couldn't be bothered with figuring out how to correctly do the mode switch in
+terms of x86 assembly as I had never done it before, can you blame me? :')*
 
 There is a bit of a problem in building a ROP chain though: after the `call` to
 our address we lose control of the execution as we do not control the SMM stack.
@@ -833,7 +855,8 @@ debug messages, EDK2 prints the base address and the entry point of every driver
 it loads:
 
 ```
-$ cat handout/run/debug.log | grep 'SMM driver'
+$ cd handout/run; ./run.sh; cd -
+$ cat debug.log | grep 'SMM driver'
 Loading SMM driver at 0x00007FE3000 EntryPoint=0x00007FE526B CpuIo2Smm.efi
 Loading SMM driver at 0x00007FD9000 EntryPoint=0x00007FDC6E4 SmmLockBox.efi
 Loading SMM driver at 0x00007FBF000 EntryPoint=0x00007FCC159 PiSmmCpuDxeSmm.efi
@@ -845,9 +868,9 @@ Loading SMM driver at 0x00007EDD000 EntryPoint=0x00007EE2A1E SmmFaultTolerantWri
 ```
 
 Surely enough, the `.text` section of all these drivers will contain code we can
-execute in SMM. What ROP gadgets do we have? Let's use
-[`ROPGadget`][gh-ropgadget] to find them, using the base addresses provided by
-the EDK2 debug log:
+execute in SMM. What ROP gadgets do we have?
+[Let's use `ROPGadget`][gh-ropgadget] to find them, using the base addresses
+provided by the EDK2 debug log:
 
 ```bash
 cd handout/edk2_artifacts
@@ -914,7 +937,7 @@ class AddAllSymbols(gdb.Command):
             gdb.COMMAND_OBSCURE, gdb.COMPLETE_NONE, True)
 
     def invoke(self, args, from_tty):
-        print('Adding symbols for all EFI modules...')
+        print('Adding symbols for all EFI drivers...')
 
         with open('debug.log', 'r') as f:
             for line in f:
@@ -1031,7 +1054,8 @@ rax            0x4141414141414141  4702111234474983745
 ```
 
 It seems like R13 (except the LSB), R14 and R15 somehow got spilled on the stack
-at. After returning from the `call rax` the code in `SmmCowsayHandler` does:
+at `rsp + 0xe0`. After returning from the `call rax` the code in
+`SmmCowsayHandler` does:
 
 ```
 (gdb) x/30i SmmCowsayHandler + 0x302
@@ -1137,7 +1161,7 @@ real_chain = [
 
 ### Putting it all together
 
-We cannot write the real ROP chain into our allocated buffer (let's say at
+We can now write the real ROP chain into our allocated buffer (let's say at
 `buffer + 0x800` just to be safe), load the gadget for flipping the stack into
 R14, the address of the new stack (i.e. `buffer + 0x800`) into R15, and go for
 the kill.
@@ -1209,9 +1233,12 @@ RAX  - 547B667463756975, RCX - 0000000000000000, RDX - 0000000000000000
 ...
 ```
 
-Surely enough, that value in RAX decodes to `uiuctf{T`. We could find some more
-gadgets to dump more bytes, but wrapping the exploit up into a function and
-running it a couple more times to get the full flag is faster to be honest:
+Surely enough, that value in RAX decodes to `uiuctf{T`, which is the test flag
+provided in the `handout/run/region4` file. We could find some more gadgets to
+dump more bytes, and we could even try using IO ports to actually write the flag
+out on the screen, but wrapping the exploit up into a function and running it a
+couple more times seemed way easier to me (*I was also not sure about how to
+output to the screen, e.g. which function or which IO port to use*).
 
 ```python
 flag = ''
@@ -1259,12 +1286,14 @@ EDK2 and QEMU patches now apply two major modifications:
 
    This isn't really a problem since we weren't really executing any code
    outside SMRAM. We can already get what we want with a simple ROP chain that
-   utilizes code already present in SMRAM.
+   utilizes code already present in SMRAM, assuming we find the right gadgets.
 
-2. ASLR has been added to EDK2: now every single driver is loaded at a different
-   address that changes each boot, with 10 bits of entropy taken from
-   [`rdrand`][x86-rdrand]. Needless to say, this makes using hardcoded addresses
-   like we did for the previous exploit impossible.
+2. ASLR has been added to EDK2 (original patches from
+   [jyao1/SecurityEx][gh-edk2-securityex] with some slight changes): now every
+   single driver is loaded at a different address that changes each boot, with
+   10 bits of entropy taken using [the `rdrand` instruction][x86-rdrand].
+   Needless to say, this makes using hardcoded addresses like we did for the
+   previous exploit impossible.
 
 
 ## Exploitation
@@ -1274,20 +1303,22 @@ EDK2 and QEMU patches now apply two major modifications:
 How do we leak some SMM address in order to defeat ASLR? Well, there are a bunch
 of protocols registered by EDK2 drivers. Each protocol has its own GUID, and
 calling `BootServices->LocateProtocol` with a valid GUID will return a pointer
-to the protocol struct (if present), *which resides in the module implementing
+to the protocol struct (if present), *which resides in the driver implementing
 the protocol!* This allows us to leak the base address (after a simple
-subtraction) of any module implementing a protocol that is registered at the
+subtraction) of any driver implementing a protocol that is registered at the
 time of the execution of our code.
 
-If we take a look at [`MdePkg/MdePkg.dec`][edk2-MdePkg] in the EDK2 source code
-we have a bunch of GUIDs for different protocols. Without even wasting time
-inspecting other parts of the source code, we can dump them all and try
-requesting every single one of them, until we find an address that looks
+If we take a look at [the file `MdePkg/MdePkg.dec`][edk2-MdePkg] in the EDK2
+source code we have a bunch of GUIDs for different protocols. Without even
+wasting time inspecting other parts of the source code, we can dump them all and
+try requesting every single one of them, until we find an address that looks
 interesting.
 
 Again, patching the `run.sh` script to let QEMU dump EDK2 debug output to a file
-like we did for SMM Cowsay 2, we can find SMBASE, which is the start address of
-SMRAM:
+like we did for SMM Cowsay 2, we can find SMBASE, which I assumed as the start
+address of SMRAM when writing the exploit. *In theory, SMRAM can expand before
+and after SMBASE, which according to Intel Doc just marks the base address used
+to find the entry point for the SMI handler and the save state area.*
 
 ```
 CPU[000]  APIC ID=0000  SMBASE=07FAF000  SaveState=07FBEC00  Size=00000400
@@ -1338,8 +1369,8 @@ for guid in guids:
 
 Surely enough, by letting the script run for enough time, we find that
 `gEfiSmmConfigurationProtocolGuid` returns a pointer to a protocol at a nice
-address. Looking at the `debug.log` for loaded modules we can see that this
-address is inside the `PiSmmCpuDxeSmm.efi` SMM module, and a simple subtraction
+address. Looking at the `debug.log` for loaded drivers we can see that this
+address is inside the `PiSmmCpuDxeSmm.efi` SMM driver, and a simple subtraction
 gives us its base address.
 
 ### Finding ROP gadgets
@@ -1515,6 +1546,7 @@ Hope you enjoyed the write-up.
 [gh-pwntools]:                         https://github.com/Gallopsled/pwntools
 [gh-ropgadget]:                        https://github.com/JonathanSalwan/ROPgadget
 [gh-edk2]:                             https://github.com/tianocore/edk2
+[gh-edk2-securityex]:                  https://github.com/jyao1/SecurityEx
 [gh-qemu]:                             https://github.com/qemu/qemu
 [qemu-memtxattrs]:                     https://github.com/qemu/qemu/blob/v7.0.0/include/exec/memattrs.h#L35
 [edk2-SystemTable]:                    https://edk2-docs.gitbook.io/edk-ii-uefi-driver-writer-s-guide/3_foundation/33_uefi_system_table
@@ -1526,3 +1558,5 @@ Hope you enjoyed the write-up.
 [edk2-smi-entry]:                      https://github.com/tianocore/edk2/blob/1774a44ad91d01294bace32b0060ce26da2f0140/UefiCpuPkg/PiSmmCpuDxeSmm/X64/SmiEntry.nasm#L89
 [edk2-gadget]:                         https://github.com/tianocore/edk2/blob/1774a44ad91d01294bace32b0060ce26da2f0140/MdePkg/Library/BaseLib/X64/LongJump.nasm#L54
 [edk2-MdePkg]:                         https://github.com/tianocore/edk2/blob/1774a44ad91d01294bace32b0060ce26da2f0140/MdePkg/MdePkg.dec
+[edk2-buffer-check]:                   https://github.com/tianocore/edk2/blob/7c0ad2c33810ead45b7919f8f8d0e282dae52e71/MdePkg/Library/SmmMemLib/SmmMemLib.c#L163
+[edk2-gdt]:                            https://github.com/tianocore/edk2/blob/2812668bfc121ee792cf3302195176ef4a2ad0bc/UefiCpuPkg/PiSmmCpuDxeSmm/X64/SmiException.nasm#L31
